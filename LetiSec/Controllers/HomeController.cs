@@ -15,6 +15,10 @@ namespace LetiSec.Controllers
             this.db = db;
         }
 
+        public IActionResult Home()
+        {
+            return View();
+        }
 
         [Authorize]
         public IActionResult Index()

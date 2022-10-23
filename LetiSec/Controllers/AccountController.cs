@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using LetiSec.Models.DbModel;
 using Microsoft.AspNetCore.Identity;
 using LetiSec.PassHashes;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LetiSec.Controllers
 {
@@ -22,6 +23,20 @@ namespace LetiSec.Controllers
             db = context;
             hashPass = new PasswordHash<User>();
         }
+
+
+        [Authorize(Roles ="user,admin")]
+        public IActionResult Home()
+        {
+            string name = User.Identity.Name;
+           
+            User user = db.Users.FirstOrDefault(u => u.Email == name);
+            Role role = db.Roles.FirstOrDefault(u => u.Id == user.RoleId);
+            role.User = user;
+
+            return View(role);
+        }
+
 
         [HttpGet]
         public IActionResult Registration()
@@ -79,7 +94,7 @@ namespace LetiSec.Controllers
                         var role = db.Roles.FirstOrDefault(p => p.User.Name == user.Name);
 
                         await Authenticate(loginUser.Email, role.Name);
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Home", "Home");
                     }
                     else
                         ModelState.AddModelError("", "Некорректные логин и(или) пароль");
@@ -89,6 +104,12 @@ namespace LetiSec.Controllers
                     ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
             return View(loginUser);
+        }
+        [Authorize]
+        public IActionResult LogOut()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Home", "Home");
         }
 
         private async Task Authenticate(string userName, string Role)

@@ -2,16 +2,22 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/StyleSheet.css" />
+
     <title>@ViewBag.Title</title>
+    
+   
 </head>
-<body>
-    <header>
-        <a asp-action="LogIn" asp-controller="Account">Вход</a> 
-        <a asp-action="Registration" asp-controller="Account">Регистрация</a>
-        <a asp-action="Info" asp-controller="Home">Информация </a>
+<body >
+    <header >
+        <a asp-action="Home" asp-controller="Account">Аккаунт</a>
+        <a asp-action="Home" asp-controller="Home">Главная</a>
+        
     </header>
-    <div>
+    <div background-color:RGB(249, 201, 16);>
         @RenderBody()
     </div>
 </body>

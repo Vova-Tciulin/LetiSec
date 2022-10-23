@@ -1,20 +1,26 @@
 ﻿@model LoginModel
 
+<div class="logInUp"  >
+
 <form asp-action="LogIn" method="post">
     
-    <div>
-        <label asp-for="Email"></label>
-        <input asp-for="Email" />
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" />
         <a><span asp-validation-for="Email"></span></a>
     </div>
-    <div>
-        <label asp-for="Password"></label>
-        <input asp-for="Password" />
+    <div class="mb-3">
+        <label asp-for="Password" class="form-label"></label>
+        <input asp-for="Password" class="form-control"/>
         <a><span asp-validation-for="Password"></span></a>
-    </div>
-    <div>
-        <input type="submit" value="Вход" />
+    </div >
+    <div class="mb-3">
+        <input type="submit" value="Вход" class="btn btn-primary"/>
+        <a asp-action="Registration" asp-controller="Account" class="btn btn-primary">Регистрация </a>
     </div>
 
 
 </form>
+
+</div>
+

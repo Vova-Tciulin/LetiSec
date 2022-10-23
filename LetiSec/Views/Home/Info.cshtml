@@ -1,9 +1,22 @@
 ﻿
+<table class="table table-sm table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Почта</th>
+            <th>Роль</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Name</td>
+                <td>@user.Mail</td>
+                <td>@user.Role</td> 
+            </tr>
+        }
+       
+    </tbody>
+</table>
 
-<div>
-    @foreach(var i in Model)
-    {
-        <p>@i.Name   @i.Mail  @i.Role</p>
-    }
-    
-</div>

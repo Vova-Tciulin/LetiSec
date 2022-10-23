@@ -1,0 +1,25 @@
+﻿@model Role
+
+
+
+<div class="mb-3" >
+    <table class="table table-sm table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Почта</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.User.Name</td>
+                <td>@Model.User.Email</td>
+            </tr>
+        </tbody>
+    </table>
+    @if (Model.Name=="admin")
+    {
+        <a asp-action="Info" asp-controller="Home" class="btn btn-primary">Информация о пользователях</a><br/>
+    }
+<a asp-action="LogOut" asp-controller="Account" class="btn btn-primary">Выход </a>
+</div>

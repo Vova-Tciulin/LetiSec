@@ -17,6 +17,7 @@ builder.Services.AddJsEngineSwitcher(options => options.DefaultEngineName = V8Js
   .AddV8();
 
 builder.Services.AddControllersWithViews();
+
 //получаем строку подключения сервера бд
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -24,7 +25,7 @@ builder.Services.AddDbContext<UserContext>(options =>options.UseSqlServer(connec
 
 //установка конфигурации подключения
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options => { options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/LogIn"); });
+    .AddCookie();
 var app = builder.Build();
 
 
@@ -51,6 +52,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Home}/{id?}");
 
 app.Run();

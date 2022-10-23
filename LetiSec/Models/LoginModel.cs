@@ -9,6 +9,7 @@ namespace LetiSec.Models
         [Display(Name = "Почта")]
         [UIHint("Email")]
         public string Email { get; set; }
+        
 
         [Required(ErrorMessage = "Введите пароль")]
         [Display(Name = "Пароль")]
