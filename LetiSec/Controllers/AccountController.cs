@@ -15,23 +15,23 @@ namespace LetiSec.Controllers
 {
     public class AccountController:Controller
     {
-        private UserContext db;
-        private PasswordHash<User> hashPass;
+        private LetiSecDB _db;
+        private PasswordHash<User> _hashPass;
 
-        public AccountController(UserContext context)
+        public AccountController(LetiSecDB context)
         {
-            db = context;
-            hashPass = new PasswordHash<User>();
+            _db = context;
+            _hashPass = new PasswordHash<User>();
         }
 
 
-        [Authorize(Roles ="user,admin")]
+        [Authorize]
         public IActionResult Home()
         {
             string name = User.Identity.Name;
            
-            User user = db.Users.FirstOrDefault(u => u.Email == name);
-            Role role = db.Roles.FirstOrDefault(u => u.Id == user.RoleId);
+            User user = _db.Users.FirstOrDefault(u => u.Email == name);
+            Role role = _db.Roles.FirstOrDefault(u => u.Id == user.RoleId);
             role.User = user;
 
             return View(role);
@@ -49,16 +49,16 @@ namespace LetiSec.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await db.Users.FirstOrDefaultAsync(u => u.Email == userModel.Email);
+                User user = await _db.Users.FirstOrDefaultAsync(u => u.Email == userModel.Email);
                 
                 if (user == null)
                 {
 
 
-                    string hash = hashPass.HashPas(user, userModel.Password);
+                    string hash = _hashPass.HashPas(user, userModel.Password);
                     user = new User { Email = userModel.Email, Name = userModel.Name, Password =hash, RoleId = 2 };
-                    db.Users.Add(user);
-                    await db.SaveChangesAsync();
+                    _db.Users.Add(user);
+                    await _db.SaveChangesAsync();
 
                     return RedirectToAction("LogIn", "Account");
                 }
@@ -83,15 +83,15 @@ namespace LetiSec.Controllers
             {
                 PasswordHasher<User> password = new Microsoft.AspNetCore.Identity.PasswordHasher<User>();
                 
-                User user = db.Users.FirstOrDefault(u => u.Email == loginUser.Email);
+                User user = _db.Users.FirstOrDefault(u => u.Email == loginUser.Email);
 
                 if (user != null)
                 {
-                    bool checkPass = hashPass.CheckPass(user, user.Password, loginUser.Password);
+                    bool checkPass = _hashPass.CheckPass(user, user.Password, loginUser.Password);
 
                     if(checkPass)
                     {
-                        var role = db.Roles.FirstOrDefault(p => p.User.Name == user.Name);
+                        var role = _db.Roles.FirstOrDefault(p => p.User.Name == user.Name);
 
                         await Authenticate(loginUser.Email, role.Name);
                         return RedirectToAction("Home", "Home");

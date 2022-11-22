@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LetiSec.Migrations
 {
-    [DbContext(typeof(UserContext))]
+    [DbContext(typeof(LetiSecDB))]
     [Migration("20221022131426_v1")]
     partial class v1
     {

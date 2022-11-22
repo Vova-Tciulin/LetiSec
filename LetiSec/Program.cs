@@ -21,7 +21,7 @@ builder.Services.AddControllersWithViews();
 //получаем строку подключения сервера бд
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<UserContext>(options =>options.UseSqlServer(connection));
+builder.Services.AddDbContext<LetiSecDB>(options =>options.UseSqlServer(connection));
 
 //установка конфигурации подключения
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

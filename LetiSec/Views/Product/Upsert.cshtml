@@ -1,0 +1,65 @@
+﻿@model ProductVM
+
+@if(Model.Product.Id==null)
+{
+    <p>Создание товара</p>
+}
+else
+{
+    <p>Обновление товара</p>
+}
+
+<form method="post" enctype="multipart/form-data">
+    <div>
+        <label asp-for="Product.Name">Название товара</label>
+        <input asp-for="Product.Name" />
+        <span asp-validation-for="Product.Name"></span>
+    </div>
+
+    <div>
+        <label asp-for="Product.CategoryId">Категория</label>
+        <select asp-for="Product.CategoryId" asp-items="@Model.Categories" class="form-control">
+            <option disabled selected>--Select Category--</option>
+        </select>
+        <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+       
+    </div>
+
+    <div>
+        <p>Описание</p>
+    </div>
+    <div>
+        <textarea asp-for="Product.Description" id="summernote"></textarea>
+        <span asp-validation-for="Product.Description" class="text-danger"></span>
+    </div>
+   
+    <div>
+        <label asp-for="Product.Price">Цена</label>
+        <input type="number" asp-for="Product.Price" />
+        <span asp-validation-for="Product.Price"></span>
+    </div>
+    <div>
+        <p>Фотография</p>
+        <input type="file" name="files" id="uploadBox" multiple class="form-control" />
+    </div>
+    @if(Model.Product.Id!=null)
+    {
+        <img src="/images/product/@Model.Product.Img">
+    }
+    <div>
+        @if (Model.Product.Id == null)
+        {
+            <button type="submit">Создать</button>
+        }
+        else
+        {
+            <button type="submit">Обновить</button>
+        }
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $('#summernote').summernote();
+    });
+</script>

@@ -4,12 +4,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace LetiSec.Models.DbModel
 {
-    public class UserContext : DbContext
+    public class LetiSecDB : DbContext
     {
 
+        public DbSet<Category> Categories { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public UserContext(DbContextOptions options)
+        public DbSet<Product> Products { get; set; }
+        public LetiSecDB(DbContextOptions options)
             : base(options)
         {
 

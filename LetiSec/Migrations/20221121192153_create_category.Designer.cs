@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LetiSec.Migrations
 {
     [DbContext(typeof(LetiSecDB))]
-    [Migration("20221022130443_init")]
-    partial class init
+    [Migration("20221121192153_create_category")]
+    partial class create_category
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,6 +22,23 @@ namespace LetiSec.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("LetiSec.Models.DbModel.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
 
             modelBuilder.Entity("LetiSec.Models.DbModel.Role", b =>
                 {
@@ -88,7 +105,7 @@ namespace LetiSec.Migrations
                             Id = 1,
                             Email = "admin@mail.ru",
                             Name = "Vladimir",
-                            Password = "AQAAAAEAACcQAAAAEFuA1a+ljDK2QthTZWozBb894KSm1Iq0dQJNotarFzL/eirNdr/a/SKBh4Fq+nvIxA==",
+                            Password = "AQAAAAEAACcQAAAAEMI+5MaHBRObSOiiLLC/1M3x0w+0aNK/NdJZ6bNmleiRYfIOFgrtpiZh951PUCrGhA==",
                             RoleId = 1
                         });
                 });

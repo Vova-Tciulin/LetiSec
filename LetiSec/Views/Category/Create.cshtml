@@ -1,0 +1,15 @@
+﻿@model Category
+
+<h1>Создание категории</h1>
+<form method="post">
+    <div>
+        <label asp-for="Name">Название категории</label>
+        <input asp-for="Name" /><br />
+        <span asp-validation-for="Name"></span>
+    </div>
+   <div>
+       <button type="submit">Создать</button>
+   </div>
+    
+    
+</form>

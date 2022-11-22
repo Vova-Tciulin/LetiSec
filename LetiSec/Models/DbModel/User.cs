@@ -17,11 +17,9 @@ namespace LetiSec.Models.DbModel
 
         public string Password { get; set; }
 
-        
-        
         public int RoleId { get; set; }
 
-       
+
 
     }
 }
