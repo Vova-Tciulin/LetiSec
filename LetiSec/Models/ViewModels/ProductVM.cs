@@ -1,11 +1,12 @@
-﻿using LetiSec.Models.DbModel;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿
+using LetiSec.Models.DbModel;
 
 namespace LetiSec.Models.ViewModels
 {
     public class ProductVM
     {
-        public IEnumerable<SelectListItem>? Categories { get; set; }
-        public Product Product { get; set; }
+        public IEnumerable<Product> Products { get; set; }
+        public IEnumerable<Category> Categories { get; set; }
+
     }
 }

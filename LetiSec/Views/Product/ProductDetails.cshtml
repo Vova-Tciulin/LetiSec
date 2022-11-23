@@ -1,0 +1,11 @@
+﻿@model Product
+
+<div>
+    <p>Название продукта: @Model.Name</p>
+    <img style="width:100px; height:100px" src="/images/product/@Model.Img" alt="ошибка загрузки" />
+    <p>Категория: @Model.Category.Name</p>
+    <h3>Описание продукта</h3>
+    @Html.Raw(Model.Description)
+    <p>Цена: @Model.Price</p>
+    <a asp-action="Cart" asp-controller="Cart">Добавить в корзину</a>
+</div>

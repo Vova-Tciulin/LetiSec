@@ -1,23 +1,28 @@
-﻿@model IEnumerable<Product>
+﻿@model ProductVM
 
-<h1>Товары</h1>
-<a asp-action="Upsert" asp-controller="Product">Создать</a>
-@if (Model.Count() == 0)
-{
-    <p>Товаров нет</p>
-}
-else
-{
-    @foreach (var product in Model)
+<div>
+    <h2>Кнопки для сортировки категорий</h2>
+    <button>All</button>
+    @foreach(var category in Model.Categories)
     {
-        <table>
-            <tr >
-                <td>@product.Name-</td>
-                <td>@product.Category.Name-</td>
-                <td><a asp-action="Upsert" asp-controller="Product" asp-route-id="@product.Id">Редактировать-</a></td>
-                <td><a asp-action="Delete" asp-controller="Product" asp-route-id="@product.Id">Удалить</a></td>
-            </tr>
-
-        </table>
+        <button>@category.Name</button>
     }
-}
+</div>
+<div>
+    <h2>Продукты</h2>
+    <div style="display:flex; padding:10px;">
+        @foreach(var product in Model.Products)
+        {
+        
+            <div style="border:1px solid black; margin:10px;">
+                <img style="width:100px;height:100px;" src="/images/product/@product.Img" alt="ошибка">
+                <p>@product.Name</p>
+                <p>@product.Price</p>
+                <a asp-action="ProductDetails" asp-controller="Product" asp-route-id="@product.Id">Подробнее</a>
+                <button>добавить в корзину</button>
+
+            </div>
+       
+        }
+    </div>
+</div>

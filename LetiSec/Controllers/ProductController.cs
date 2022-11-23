@@ -27,7 +27,7 @@ namespace LetiSec.Controllers
         }
 
         [HttpGet]
-        public IActionResult ViewProduct()
+        public IActionResult CRUD()
         {
             IEnumerable<Product> products = _db.Products.Include(u=>u.Category);
 
@@ -35,9 +35,23 @@ namespace LetiSec.Controllers
         }
 
         [HttpGet]
-        public IActionResult Upsert(int? id)
+        public IActionResult ViewProduct()
         {
             ProductVM productVM = new ProductVM()
+            {
+                Products = _db.Products.Include(u => u.Category),
+                Categories = _db.Categories
+            };
+
+           
+
+            return View(productVM);
+        }
+
+        [HttpGet]
+        public IActionResult Upsert(int? id)
+        {
+            CRUDProductVM crudProductVM = new CRUDProductVM()
             {
                 Categories =_db.Categories.Select(i => new SelectListItem
                 {
@@ -49,20 +63,20 @@ namespace LetiSec.Controllers
             if(id==null)
             {
                 //create
-                return View(productVM);
+                return View(crudProductVM);
             }
             else
             {
                 //update
-                productVM.Product = _db.Products.Find(id);
+                crudProductVM.Product = _db.Products.Find(id);
 
-                return View(productVM);
+                return View(crudProductVM);
             }
  
         }
 
         [HttpPost]
-        public IActionResult Upsert(ProductVM productVM)
+        public IActionResult Upsert(CRUDProductVM productVM)
         {
             
             if (ModelState.IsValid)
@@ -119,7 +133,7 @@ namespace LetiSec.Controllers
                 }
 
                 _db.SaveChanges();
-                return RedirectToAction("ViewProduct");
+                return RedirectToAction("CRUD");
             }
             else
             {
@@ -127,6 +141,18 @@ namespace LetiSec.Controllers
                 return View(productVM);
             }    
                 
+
+        }
+
+        public IActionResult ProductDetails(int id)
+        {
+         
+            Product? product = _db.Products.Include(u=>u.Category).FirstOrDefault(u=>u.Id==id);
+
+            if (product == null)
+                return NotFound();
+
+            return View(product);
 
         }
 
@@ -150,7 +176,7 @@ namespace LetiSec.Controllers
             _db.Products.Remove(product);
             _db.SaveChanges();
 
-            return RedirectToAction("ViewProduct");
+            return RedirectToAction("CRUDProduct");
         }
     }
 }
