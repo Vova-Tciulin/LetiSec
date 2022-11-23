@@ -18,7 +18,7 @@ builder.Services.AddJsEngineSwitcher(options => options.DefaultEngineName = V8Js
 
 builder.Services.AddControllersWithViews();
 
-//получаем строку подключения сервера бд
+//получаем строку подключения сервера бд 
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<LetiSecDB>(options =>options.UseSqlServer(connection));
