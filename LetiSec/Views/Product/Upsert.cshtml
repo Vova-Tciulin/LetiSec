@@ -1,8 +1,9 @@
 ﻿@model CRUDProductVM
 
-@if(Model.Product.Id==null)
+@if(Model.Product.Id==0)
 {
     <p>Создание товара</p>
+    <label asp-for="@Model.Product.Id" hidden></label>
 }
 else
 {
@@ -18,6 +19,8 @@ else
 
     <div>
         <label asp-for="Product.CategoryId">Категория</label>
+        
+
         <select asp-for="Product.CategoryId" asp-items="@Model.Categories" class="form-control">
             <option disabled selected>--Select Category--</option>
         </select>
@@ -29,7 +32,21 @@ else
         <p>Описание</p>
     </div>
     <div>
-        <textarea asp-for="Product.Description" id="summernote"></textarea>
+        <script>
+            $(document).ready(function() {
+                $('.summernote').summernote({
+                    toolbar: [
+                        // [groupName, [list of button]]
+                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                        ['fontsize', ['fontsize']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['height', ['height']]
+                    ]
+                });
+            });
+        </script>
+        <textarea asp-for="Product.Description"  class="summernote"></textarea>
         <span asp-validation-for="Product.Description" class="text-danger"></span>
     </div>
    
@@ -42,12 +59,12 @@ else
         <p>Фотография</p>
         <input type="file" name="files" id="uploadBox" multiple class="form-control" />
     </div>
-    @if(Model.Product.Id!=null)
+    @if(Model.Product.Id!=0)
     {
-        <img src="/images/product/@Model.Product.Img">
+        <img src="/images/products/@Model.Product.Img">
     }
     <div>
-        @if (Model.Product.Id == null)
+        @if (Model.Product.Id == 0)
         {
             <button type="submit">Создать</button>
         }
@@ -58,8 +75,3 @@ else
     </div>
 </form>
 
-<script>
-    $(document).ready(function () {
-        $('#summernote').summernote();
-    });
-</script>

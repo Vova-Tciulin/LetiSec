@@ -4,17 +4,20 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using JavaScriptEngineSwitcher.V8;
 using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
-using React.AspNet;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.AddReact();
-
-
-builder.Services.AddJsEngineSwitcher(options => options.DefaultEngineName = V8JsEngine.EngineName)
-  .AddV8();
+//добавление сессий
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 builder.Services.AddControllersWithViews();
 
@@ -25,7 +28,10 @@ builder.Services.AddDbContext<LetiSecDB>(options =>options.UseSqlServer(connecti
 
 //установка конфигурации подключения
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie();
+.AddCookie(options=>
+    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/LogIn"));
+
+
 var app = builder.Build();
 
 
@@ -38,18 +44,13 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
-app.UseReact(config =>config.AddScript("~/js/First.jsx")
-                        .AddScript("~/js/Second.jsx")
-);
-
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseSession();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Home}/{id?}");
