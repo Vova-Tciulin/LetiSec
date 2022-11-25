@@ -15,12 +15,10 @@
         {
         
             <div style="border:1px solid black; margin:10px;">
-                <img style="width:100px;height:100px;" src="/images/product/@product.Img" alt="ошибка">
+                <img style="width:100px;height:100px;" src="/images/products/@product.Img" alt="ошибка">
                 <p>@product.Name</p>
                 <p>@product.Price</p>
                 <a asp-action="ProductDetails" asp-controller="Product" asp-route-id="@product.Id">Подробнее</a>
-                <button>добавить в корзину</button>
-
             </div>
        
         }

@@ -12,6 +12,8 @@ using LetiSec.PassHashes;
 using Microsoft.AspNetCore.Authorization;
 using LetiSec.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using LetiSec.Utility;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace LetiSec.Controllers
 {
@@ -19,11 +21,13 @@ namespace LetiSec.Controllers
     {
         private readonly LetiSecDB _db;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IHttpContextAccessor _HttpContextAccessor;
 
-        public ProductController(LetiSecDB db, IWebHostEnvironment webHostEnvironment)
+        public ProductController(LetiSecDB db, IWebHostEnvironment webHostEnvironment, IHttpContextAccessor HttpContextAccessor)
         {
             _db = db;
             _webHostEnvironment = webHostEnvironment;
+            _HttpContextAccessor = HttpContextAccessor;
         }
 
         [HttpGet]
@@ -84,7 +88,7 @@ namespace LetiSec.Controllers
                 var files = HttpContext.Request.Form.Files;
                 string webRoothPath = _webHostEnvironment.WebRootPath;
 
-                if (productVM.Product.Id == null)
+                if (productVM.Product.Id ==0)
                 {
                     //create
 
@@ -146,16 +150,30 @@ namespace LetiSec.Controllers
 
         public IActionResult ProductDetails(int id)
         {
-         
-            Product? product = _db.Products.Include(u=>u.Category).FirstOrDefault(u=>u.Id==id);
 
-            if (product == null)
-                return NotFound();
+            ProductDetailsVM productDetailsVM = new ProductDetailsVM();
 
-            return View(product);
+            productDetailsVM.Product = _db.Products.Include(u=>u.Category).FirstOrDefault(u=>u.Id==id);
+            
+            List<ShoppingCart> shoppingCarts = new List<ShoppingCart>();
+            if (_HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(WebConst.SessionCart) != null)
+            {
+                shoppingCarts = _HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(WebConst.SessionCart);
+            }
+
+            List<int> productId = shoppingCarts.Select(i => i.ProductId).ToList();
+
+            if (productId.Contains(id))
+                productDetailsVM.isContains = true;
+            else
+                productDetailsVM.isContains = false;
+
+            ViewBag.ReturnUrl = Request.Path.ToString();
+
+            return View(productDetailsVM);
 
         }
-
+        
         public IActionResult Delete(int id)
         {
             var product = _db.Products.Find(id);

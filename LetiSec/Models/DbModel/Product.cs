@@ -4,7 +4,7 @@ namespace LetiSec.Models.DbModel
 {
     public class Product
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Введите название продукта")]
         public string Name { get; set; }

@@ -1,4 +1,4 @@
-﻿@model Role
+﻿@model User
 
 
 
@@ -12,11 +12,24 @@
         </thead>
         <tbody>
             <tr>
-                <td>@Model.User.Name</td>
-                <td>@Model.User.Email</td>
+                <td>@Model.Name</td>
+                <td>@Model.Email</td>
             </tr>
         </tbody>
     </table>
+    <h2>Заказы</h2>
+    <ul>
+    @foreach(var order in Model.Orders)
+    {
+        <li>
+            Id заказа:@order.Id
+        </li>
+        foreach(var product in order.Products)
+        {
+            <li>Продукт: @product.Name</li>
+        }
+    }
+    </ul>
     @if (Model.Name=="admin")
     {
         <a asp-action="Info" asp-controller="Home" class="btn btn-primary">Информация о пользователях</a><br/>

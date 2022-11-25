@@ -2,6 +2,7 @@
 {
     public static class WebConst
     {
-        public static string ImageProductPath = @"\images\product";
+        public static string ImageProductPath = @"\images\products";
+        public static string SessionCart = "ShoppingCartSession";
     }
 }
