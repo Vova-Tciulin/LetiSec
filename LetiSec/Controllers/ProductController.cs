@@ -24,6 +24,7 @@ namespace LetiSec.Controllers
         {
             _db = db;
             _webHostEnvironment = webHostEnvironment;
+
         }
 
         [HttpGet]
