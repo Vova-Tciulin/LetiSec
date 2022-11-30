@@ -55,11 +55,24 @@ namespace LetiSec.Controllers
             }
             List<int>productId= shoppingCarts.Select(i => i.ProductId).ToList();
 
+            List<Order> orders = new List<Order>();
+
+           
             //получаем товар по id
             IEnumerable<Product> productsDb = _db.Products.Where(u => productId.Contains(u.Id));
             ViewBag.ReturnUrl = Request.Path.ToString();
 
-            return View(productsDb);
+            foreach(var product in productsDb)
+            {
+                Order order1 = new Order();
+                order1.ProductId = product.Id;
+                order1.Product = product;
+                order1.Count = productId.FindAll(u=>u==product.Id).Count;
+
+                orders.Add(order1);
+            }
+
+            return View(orders);
 
         }
 
@@ -88,10 +101,11 @@ namespace LetiSec.Controllers
             return RedirectToAction(action, controller, new {id=id});
         }
 
+
         [Authorize]
         public IActionResult BuyProduct()
         {
-            
+            //поменять order
             //все id товаров
             List<ShoppingCart> shoppingCarts = new List<ShoppingCart>();
             if (_HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(WebConst.SessionCart) != null)
@@ -100,24 +114,33 @@ namespace LetiSec.Controllers
             }
             List<int> productId = shoppingCarts.Select(i => i.ProductId).ToList();
 
+            List<Order> orders = new List<Order>();
+
             //получаем товар по id
             IEnumerable<Product> productsDb = _db.Products.Where(u => productId.Contains(u.Id));
-     
-            Order order = new Order();
+            ViewBag.ReturnUrl = Request.Path.ToString();
 
+            foreach (var product in productsDb)
+            {
+                Order order = new Order();
+                order.ProductId = product.Id;
+                order.Product = product;
+                order.Count = productId.FindAll(u => u == product.Id).Count;
+
+                orders.Add(order);
+            }
             var userName = HttpContext.User.Identity.Name;
             User user = _db.Users.FirstOrDefault(u => u.Email == userName);
 
-            order.UserId = user.Id;
-            foreach(var product in productsDb)
+            foreach(var order in orders)
             {
-                order.Products.Add(product);
+                order.UserId = user.Id;
+                order.Date = DateTime.Now;
+                _db.Orders.Add(order);
             }
 
             _HttpContextAccessor.HttpContext.Session.Clear();
-            _db.Orders.Add(order);
             _db.SaveChanges();
-
             return RedirectToAction("Home","Home");
         }
         

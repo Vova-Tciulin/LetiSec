@@ -18,21 +18,20 @@
         </tbody>
     </table>
     <h2>Заказы</h2>
+    @if(Model.Orders.Count==0)
+    {
+        <h3>Покупок нет</h3>
+    }
     <ul>
-    @foreach(var order in Model.Orders)
-    {
-        <li>
-            Id заказа:@order.Id
-        </li>
-        foreach(var product in order.Products)
+        @foreach(var order in Model.Orders)
         {
-            <li>Продукт: @product.Name</li>
+            <li>
+                Товар: @order.Product.Name<br>
+                Количество: @order.Count<br>
+            </li>
+           
         }
-    }
     </ul>
-    @if (Model.Name=="admin")
-    {
-        <a asp-action="Info" asp-controller="Home" class="btn btn-primary">Информация о пользователях</a><br/>
-    }
+    
 <a asp-action="LogOut" asp-controller="Account" class="btn btn-primary">Выход </a>
 </div>

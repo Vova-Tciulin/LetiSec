@@ -4,6 +4,7 @@ using LetiSec.Models.DbModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LetiSec.Migrations
 {
     [DbContext(typeof(LetiSecDB))]
-    partial class UserContextModelSnapshot : ModelSnapshot
+    [Migration("20221130152334_addDateToOrderDB")]
+    partial class addDateToOrderDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +53,7 @@ namespace LetiSec.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("Date");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -174,7 +176,7 @@ namespace LetiSec.Migrations
                             Id = 1,
                             Email = "admin@mail.ru",
                             Name = "Vladimir",
-                            Password = "AQAAAAEAACcQAAAAEIFFRRdGnBapXBYFZgFr12Qefy3dPlN3EJg8FPmjGqShU1yJC5Ouw65nijoeQTSWeA==",
+                            Password = "AQAAAAEAACcQAAAAEFv+nUk0bOYMXJ2mAsW/rdVywginDfq83VBK60sS/pYWg1m7WDg5a7lOb32nWiV4SQ==",
                             RoleId = 1
                         });
                 });

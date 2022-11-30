@@ -38,11 +38,21 @@
 							<ul>
 								<li class="current_page_item"><a asp-action="Home" asp-controller="Home">Главная</a></li>
 								<li>
-									<a href="#">Создание</a>
-									<ul>	
-										<li><a asp-action="ViewCategory" asp-controller="Category">Категории</a></li>
-										<li><a asp-action="CRUD" asp-controller="Product">Создание товара</a></li>	
-									</ul>
+									@if (User.IsInRole("admin"))
+									{
+										<a asp-action="ViewUsers" asp-controller="Admin">Админ</a>
+									}
+								</li>
+								<li>
+									@if(User.IsInRole("admin")||User.IsInRole("moderator") )
+									{
+										<a href="#">Создание</a>
+										<ul>	
+											<li><a asp-action="ViewCategory" asp-controller="Category">Категории</a></li>
+											<li><a asp-action="CRUD" asp-controller="Product">Создание товара</a></li>	
+										</ul>
+									}
+									
 								</li>
 								<li><a asp-action="ViewProduct" asp-controller="Product">Товары</a></li>
 								<li><a asp-action="Home" asp-controller="Account">Аккаунт</a></li>

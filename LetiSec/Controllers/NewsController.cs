@@ -11,87 +11,67 @@ using Microsoft.AspNetCore.Identity;
 using LetiSec.PassHashes;
 using Microsoft.AspNetCore.Authorization;
 using LetiSec.Models.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using LetiSec.Utility;
-using Microsoft.AspNetCore.Http.Extensions;
 
-namespace LetiSec.Controllers
+/*namespace LetiSec.Controllers
 {
-    public class ProductController:Controller
+    public class NewsController:Controller
     {
         private readonly LetiSecDB _db;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IHttpContextAccessor _HttpContextAccessor;
-
-        public ProductController(LetiSecDB db, IWebHostEnvironment webHostEnvironment, IHttpContextAccessor HttpContextAccessor)
+        public NewsController(LetiSecDB db, IWebHostEnvironment webHostEnvironment)
         {
             _db = db;
             _webHostEnvironment = webHostEnvironment;
-            _HttpContextAccessor = HttpContextAccessor;
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin,moderator")]
         public IActionResult CRUD()
         {
-            IEnumerable<Product> products = _db.Products.Include(u=>u.Category);
+            IEnumerable<News> news = _db.News;
 
-            return View(products);
+            return View(news);
         }
-        
+
         [HttpGet]
-        public IActionResult ViewProduct()
+        public IActionResult ViewNews()
         {
-            ProductVM productVM = new ProductVM()
-            {
-                Products = _db.Products.Include(u => u.Category),
-                Categories = _db.Categories
-            };
+            IEnumerable<News> news = _db.News;
 
-           
-
-            return View(productVM);
+            return View(news);
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin,moderator")]
         public IActionResult Upsert(int? id)
         {
-            CRUDProductVM crudProductVM = new CRUDProductVM()
-            {
-                Categories =_db.Categories.Select(i => new SelectListItem
-                {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
-                }),
-                Product = new Product()
-            };
-            if(id==null)
+            News news = new News();
+
+            if (id == null)
             {
                 //create
-                return View(crudProductVM);
+                return View(news);
             }
             else
             {
                 //update
-                crudProductVM.Product = _db.Products.Find(id);
+                news = _db.News.Find(id);
 
-                return View(crudProductVM);
+                return View(news);
             }
- 
+
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin,moderator")]
-        public IActionResult Upsert(CRUDProductVM productVM)
+        public IActionResult Upsert()
         {
-            
+
             if (ModelState.IsValid)
             {
                 var files = HttpContext.Request.Form.Files;
                 string webRoothPath = _webHostEnvironment.WebRootPath;
 
-                if (productVM.Product.Id ==0)
+                if (productVM.Product.Id == 0)
                 {
                     //create
 
@@ -117,7 +97,7 @@ namespace LetiSec.Controllers
 
                     if (files.Count > 0)
                     {
-                        string upload = webRoothPath + WebConst.ImageProductPath;
+                        string upload = webRoothPath + WebConst.ImageNewsPath;
                         string fileName = Guid.NewGuid().ToString();
                         string extension = Path.GetExtension(files[0].FileName);
 
@@ -144,21 +124,20 @@ namespace LetiSec.Controllers
             }
             else
             {
-               
+
                 return View(productVM);
-            }    
-                
+            }
+
 
         }
-
 
         public IActionResult ProductDetails(int id)
         {
 
             ProductDetailsVM productDetailsVM = new ProductDetailsVM();
 
-            productDetailsVM.Product = _db.Products.Include(u=>u.Category).FirstOrDefault(u=>u.Id==id);
-            
+            productDetailsVM.Product = _db.Products.Include(u => u.Category).FirstOrDefault(u => u.Id == id);
+
             List<ShoppingCart> shoppingCarts = new List<ShoppingCart>();
             if (_HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(WebConst.SessionCart) != null)
             {
@@ -178,7 +157,6 @@ namespace LetiSec.Controllers
 
         }
 
-        [Authorize(Roles = "admin,moderator")]
         public IActionResult Delete(int id)
         {
             var product = _db.Products.Find(id);
@@ -203,3 +181,5 @@ namespace LetiSec.Controllers
         }
     }
 }
+}
+*/
