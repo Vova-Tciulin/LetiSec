@@ -49,13 +49,23 @@
 										<a href="#">Создание</a>
 										<ul>	
 											<li><a asp-action="ViewCategory" asp-controller="Category">Категории</a></li>
-											<li><a asp-action="CRUD" asp-controller="Product">Создание товара</a></li>	
+											<li><a asp-action="CRUD" asp-controller="Product">Создание товара</a></li>
+											<li><a asp-action="CRUD" asp-controller="News">Создание новостей</a></li>
 										</ul>
 									}
 									
 								</li>
+								<li><a asp-action="ViewNews" asp-controller="News">Новости</a></li>
 								<li><a asp-action="ViewProduct" asp-controller="Product">Товары</a></li>
-								<li><a asp-action="Home" asp-controller="Account">Аккаунт</a></li>
+								@if(User.Identity.Name==null)
+								{
+									<li><a asp-action="Home" asp-controller="Account">Вход</a></li>
+								}
+								else
+								{
+									<li><a asp-action="Home" asp-controller="Account">Аккаунт</a></li>
+								}
+								
 								<li>
 									@if(HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(WebConst.SessionCart)!=null)
 										{

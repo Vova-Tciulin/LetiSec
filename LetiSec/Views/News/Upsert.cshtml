@@ -1,0 +1,63 @@
+﻿@model News
+
+@if (Model.Id == 0)
+{
+    <p>Создание </p>
+    <label asp-for="@Model.Id" hidden></label>
+}
+else
+{
+    <p>Обновление</p>
+}
+
+<form method="post" enctype="multipart/form-data">
+    <div>
+        <label asp-for="ShortDesc">короткое описание</label>
+        <input asp-for="ShortDesc" />
+        <span asp-validation-for="ShortDesc"></span>
+    </div>
+
+    <div>
+        <p>Описание</p>
+    </div>
+    <div>
+        
+        <textarea asp-for="Description" class="summernote"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div>
+        <p>Фотография</p>
+        <input type="file" name="files" id="uploadBox" multiple class="form-control" />
+    </div>
+    @if (Model.Id != 0)
+    {
+        <img src="/images/news/@Model.Img">
+    }
+    <div>
+        @if (Model.Id == 0)
+        {
+            <button type="submit">Создать</button>
+        }
+        else
+        {
+            <button type="submit">Обновить</button>
+        }
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $('.summernote').summernote({
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']]
+            ]
+        });
+    });
+</script>
+

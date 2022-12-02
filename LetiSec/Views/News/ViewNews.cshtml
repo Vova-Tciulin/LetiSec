@@ -1,0 +1,18 @@
+﻿@model IEnumerable<News>
+
+<div>
+    <h2>Продукты</h2>
+   
+        @foreach (var news in Model)
+        {
+
+            <div style="border:1px solid black; margin:10px;">
+                <img style="width:100px;height:100px;" src="/images/news/@news.Img" alt="ошибка">
+                <p>@news.ShortDesc</p>
+         
+                <a asp-action="NewsDetails" asp-controller="News" asp-route-id="@news.Id">Подробнее</a>
+            </div>
+
+        }
+    </div>
+</div>

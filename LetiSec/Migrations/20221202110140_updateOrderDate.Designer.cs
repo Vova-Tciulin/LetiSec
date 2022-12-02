@@ -4,6 +4,7 @@ using LetiSec.Models.DbModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LetiSec.Migrations
 {
     [DbContext(typeof(LetiSecDB))]
-    partial class UserContextModelSnapshot : ModelSnapshot
+    [Migration("20221202110140_updateOrderDate")]
+    partial class updateOrderDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,33 +39,6 @@ namespace LetiSec.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("LetiSec.Models.DbModel.News", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("Date");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Img")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ShortDesc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("News");
                 });
 
             modelBuilder.Entity("LetiSec.Models.DbModel.Order", b =>
@@ -201,7 +176,7 @@ namespace LetiSec.Migrations
                             Id = 1,
                             Email = "admin@mail.ru",
                             Name = "Vladimir",
-                            Password = "AQAAAAEAACcQAAAAENJM1tsVGmau/QQI5fBO7Z1i+uaLlUPx0Vxsgk0j9E/oHJ7i6TEZgyW5kWPpN3Njdg==",
+                            Password = "AQAAAAEAACcQAAAAENgFquh3/EG9HG8IGxpsUBugNAUZ3JQURxjUQx433pR2Dz3F6vTjtq5jaa4P5FLpbg==",
                             RoleId = 1
                         });
                 });

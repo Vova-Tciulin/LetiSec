@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LetiSec.Models.DbModel
 {
@@ -6,11 +8,14 @@ namespace LetiSec.Models.DbModel
     {
         public int Id { get; set; }
 
-       // public DateOnly Date { get; set; }
         [Required]
         public string ShortDesc { get; set; }
         [Required]
         public string Description { get; set; }
+
+        [DataType(DataType.Date)]
+        [Column(TypeName = "Date")]
+        public DateTime Date { get; set; }
         public string? Img { get; set; }
 
 

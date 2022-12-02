@@ -14,9 +14,9 @@ using LetiSec.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-/*namespace LetiSec.Controllers
+namespace LetiSec.Controllers
 {
-    public class NewsController:Controller
+    public class NewsController : Controller
     {
         private readonly LetiSecDB _db;
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -63,7 +63,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
         }
 
         [HttpPost]
-        public IActionResult Upsert()
+        public IActionResult Upsert(News news)
         {
 
             if (ModelState.IsValid)
@@ -71,11 +71,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
                 var files = HttpContext.Request.Form.Files;
                 string webRoothPath = _webHostEnvironment.WebRootPath;
 
-                if (productVM.Product.Id == 0)
+                if (news.Id == 0)
                 {
                     //create
 
-                    string path = webRoothPath + WebConst.ImageProductPath;
+                    string path = webRoothPath + WebConst.ImageNewsPath;
                     string fileName = Guid.NewGuid().ToString();
                     string extension = Path.GetExtension(files[0].FileName);
 
@@ -84,16 +84,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
                         files[0].CopyTo(fileStream);
                     }
 
-                    productVM.Product.Img = fileName + extension;
+                    news.Img = fileName + extension;
 
-                    _db.Products.Add(productVM.Product);
+                    _db.News.Add(news);
 
                 }
                 else
                 {
                     //update
 
-                    var oldProduct = _db.Products.AsNoTracking().First(u => u.Id == productVM.Product.Id);
+                    var oldProduct = _db.News.AsNoTracking().First(u => u.Id == news.Id);
 
                     if (files.Count > 0)
                     {
@@ -112,10 +112,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
                             files[0].CopyTo(fileStream);
                         }
 
-                        productVM.Product.Img = fileName + extension;
+                        news.Img = fileName + extension;
                     }
 
-                    _db.Products.Update(productVM.Product);
+                    _db.News.Update(news);
 
                 }
 
@@ -125,48 +125,28 @@ using Microsoft.AspNetCore.Mvc.Rendering;
             else
             {
 
-                return View(productVM);
+                return View(news);
             }
 
 
         }
-
-        public IActionResult ProductDetails(int id)
+        public IActionResult NewsDetails(int id)
         {
 
-            ProductDetailsVM productDetailsVM = new ProductDetailsVM();
-
-            productDetailsVM.Product = _db.Products.Include(u => u.Category).FirstOrDefault(u => u.Id == id);
-
-            List<ShoppingCart> shoppingCarts = new List<ShoppingCart>();
-            if (_HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(WebConst.SessionCart) != null)
-            {
-                shoppingCarts = _HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(WebConst.SessionCart);
-            }
-
-            List<int> productId = shoppingCarts.Select(i => i.ProductId).ToList();
-
-            if (productId.Contains(id))
-                productDetailsVM.isContains = true;
-            else
-                productDetailsVM.isContains = false;
-
-            ViewBag.ReturnUrl = Request.Path.ToString();
-
-            return View(productDetailsVM);
-
+            News news = _db.News.FirstOrDefault(u=>u.Id==id);
+            return View(news);
         }
 
         public IActionResult Delete(int id)
         {
-            var product = _db.Products.Find(id);
-            if (product == null)
+            var news = _db.News.Find(id);
+            if (news == null)
             {
                 return NotFound();
             }
 
-            string upload = _webHostEnvironment.WebRootPath + WebConst.ImageProductPath;
-            var oldFile = Path.Combine(upload, product.Img);
+            string upload = _webHostEnvironment.WebRootPath + WebConst.ImageNewsPath;
+            var oldFile = Path.Combine(upload, news.Img);
 
             if (System.IO.File.Exists(oldFile))
             {
@@ -174,12 +154,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
             }
 
 
-            _db.Products.Remove(product);
+            _db.News.Remove(news);
             _db.SaveChanges();
-
-            return RedirectToAction("CRUDProduct");
+            return RedirectToAction("CRUD");
         }
     }
 }
-}
-*/
+
