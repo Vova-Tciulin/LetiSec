@@ -25,7 +25,7 @@ namespace LetiSec.Controllers
         }
 
 
-        [Authorize]
+        //[Authorize]
         public IActionResult Home()
         {
             //поменять order
@@ -108,7 +108,7 @@ namespace LetiSec.Controllers
         }
 
 
-        [Authorize]
+       // [Authorize]
         public IActionResult LogOut()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

@@ -38,21 +38,21 @@
 							<ul>
 								<li class="current_page_item"><a asp-action="Home" asp-controller="Home">Главная</a></li>
 								<li>
-									@if (User.IsInRole("admin"))
-									{
+									@*@if (User.IsInRole("admin"))
+									{*@
 										<a asp-action="ViewUsers" asp-controller="Admin">Админ</a>
-									}
+									@*}*@
 								</li>
 								<li>
-									@if(User.IsInRole("admin")||User.IsInRole("moderator") )
-									{
+									@*@if(User.IsInRole("admin")||User.IsInRole("moderator") )
+									{*@
 										<a href="#">Создание</a>
 										<ul>	
 											<li><a asp-action="ViewCategory" asp-controller="Category">Категории</a></li>
 											<li><a asp-action="CRUD" asp-controller="Product">Создание товара</a></li>
 											<li><a asp-action="CRUD" asp-controller="News">Создание новостей</a></li>
 										</ul>
-									}
+									@*}*@
 									
 								</li>
 								<li><a asp-action="ViewNews" asp-controller="News">Новости</a></li>
@@ -226,7 +226,10 @@
 	<script src="~/js/breakpoints.min.js"></script>
 	<script src="~/js/util.js"></script>
 	<script src="~/js/main.js"></script>
-	
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+
 
 
 </body>
