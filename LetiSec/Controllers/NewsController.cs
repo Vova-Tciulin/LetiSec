@@ -85,7 +85,7 @@ namespace LetiSec.Controllers
                     }
 
                     news.Img = fileName + extension;
-
+                    news.Date= DateTime.Now;
                     _db.News.Add(news);
 
                 }
@@ -93,7 +93,7 @@ namespace LetiSec.Controllers
                 {
                     //update
 
-                    var oldProduct = _db.News.AsNoTracking().First(u => u.Id == news.Id);
+                    var oldNews = _db.News.AsNoTracking().First(u => u.Id == news.Id);
 
                     if (files.Count > 0)
                     {
@@ -101,7 +101,7 @@ namespace LetiSec.Controllers
                         string fileName = Guid.NewGuid().ToString();
                         string extension = Path.GetExtension(files[0].FileName);
 
-                        var oldFile = Path.Combine(upload, oldProduct.Img);
+                        var oldFile = Path.Combine(upload, oldNews.Img);
 
                         if (System.IO.File.Exists(oldFile))
                         {
@@ -114,7 +114,7 @@ namespace LetiSec.Controllers
 
                         news.Img = fileName + extension;
                     }
-
+                    
                     _db.News.Update(news);
 
                 }
