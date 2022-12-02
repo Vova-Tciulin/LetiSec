@@ -97,11 +97,11 @@ namespace LetiSec.Migrations
 
             modelBuilder.Entity("LetiSec.Models.DbModel.Product", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -226,7 +226,7 @@ namespace LetiSec.Migrations
             modelBuilder.Entity("LetiSec.Models.DbModel.Product", b =>
                 {
                     b.HasOne("LetiSec.Models.DbModel.Category", "Category")
-                        .WithMany("Products")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -236,9 +236,9 @@ namespace LetiSec.Migrations
 
             modelBuilder.Entity("LetiSec.Models.DbModel.User", b =>
                 {
-                    b.HasOne("LetiSec.Models.DbModel.Role", "Role")
-                        .WithMany("User")
-                        .HasForeignKey("RoleId")
+                    b.HasOne("LetiSec.Models.DbModel.Role", null)
+                        .WithOne("User")
+                        .HasForeignKey("LetiSec.Models.DbModel.User", "RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -252,12 +252,8 @@ namespace LetiSec.Migrations
 
             modelBuilder.Entity("LetiSec.Models.DbModel.Role", b =>
                 {
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("LetiSec.Models.DbModel.User", b =>
-                {
-                    b.Navigation("Orders");
+                    b.Navigation("User")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
