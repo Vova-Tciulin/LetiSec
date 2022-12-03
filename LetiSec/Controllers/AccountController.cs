@@ -25,13 +25,14 @@ namespace LetiSec.Controllers
         }
 
 
-        [Authorize]
+        //[Authorize]
         public IActionResult Home()
         {
+            //поменять order
             string name = User.Identity.Name;
 
             User user = _db.Users.Include(u => u.Role).FirstOrDefault(u => u.Email == name);
-            IEnumerable<Order> orders = _db.Orders.Include(u => u.Products).Where(u => u.UserId == user.Id);
+            IEnumerable<Order> orders = _db.Orders.Include(u => u.Product).Where(u => u.UserId == user.Id);
             user.Orders = orders.ToList();
 
             return View(user);
@@ -45,6 +46,7 @@ namespace LetiSec.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Registration(RegisterModel userModel)
         {
             if (ModelState.IsValid)
@@ -104,7 +106,9 @@ namespace LetiSec.Controllers
             }
             return View(loginUser);
         }
-        [Authorize]
+
+
+       // [Authorize]
         public IActionResult LogOut()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

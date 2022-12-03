@@ -31,6 +31,7 @@ namespace LetiSec.Controllers
         }
 
         [HttpGet]
+       // [Authorize(Roles ="admin,moderator")]
         public IActionResult Create()
         {
             Category category = new Category();
@@ -39,6 +40,7 @@ namespace LetiSec.Controllers
         }
 
         [HttpPost]
+      //  [Authorize(Roles = "admin,moderator")]
         public IActionResult Create(Category category)
         {
             if(ModelState.IsValid)
@@ -53,7 +55,7 @@ namespace LetiSec.Controllers
                 return View(category);
             
         }
-        
+      //  [Authorize(Roles = "admin,moderator")]
         public IActionResult Delete(int id)
         {
             var category = _db.Categories.Find(id);

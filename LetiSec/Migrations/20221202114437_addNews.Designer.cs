@@ -4,6 +4,7 @@ using LetiSec.Models.DbModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LetiSec.Migrations
 {
     [DbContext(typeof(LetiSecDB))]
-    partial class UserContextModelSnapshot : ModelSnapshot
+    [Migration("20221202114437_addNews")]
+    partial class addNews
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,11 +99,11 @@ namespace LetiSec.Migrations
 
             modelBuilder.Entity("LetiSec.Models.DbModel.Product", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -226,7 +228,7 @@ namespace LetiSec.Migrations
             modelBuilder.Entity("LetiSec.Models.DbModel.Product", b =>
                 {
                     b.HasOne("LetiSec.Models.DbModel.Category", "Category")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -236,9 +238,9 @@ namespace LetiSec.Migrations
 
             modelBuilder.Entity("LetiSec.Models.DbModel.User", b =>
                 {
-                    b.HasOne("LetiSec.Models.DbModel.Role", null)
-                        .WithOne("User")
-                        .HasForeignKey("LetiSec.Models.DbModel.User", "RoleId")
+                    b.HasOne("LetiSec.Models.DbModel.Role", "Role")
+                        .WithMany("User")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -252,8 +254,12 @@ namespace LetiSec.Migrations
 
             modelBuilder.Entity("LetiSec.Models.DbModel.Role", b =>
                 {
-                    b.Navigation("User")
-                        .IsRequired();
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("LetiSec.Models.DbModel.User", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

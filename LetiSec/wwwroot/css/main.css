@@ -211,6 +211,7 @@ body {
 		max-width: calc(100% - 100px);
 		width: 1200px;
 	}
+	
 
 		@media screen and (max-width: 1280px) {
 

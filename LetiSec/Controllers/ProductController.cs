@@ -31,13 +31,14 @@ namespace LetiSec.Controllers
         }
 
         [HttpGet]
+       // [Authorize(Roles = "admin,moderator")]
         public IActionResult CRUD()
         {
             IEnumerable<Product> products = _db.Products.Include(u=>u.Category);
 
             return View(products);
         }
-
+        
         [HttpGet]
         public IActionResult ViewProduct()
         {
@@ -53,6 +54,7 @@ namespace LetiSec.Controllers
         }
 
         [HttpGet]
+        //[Authorize(Roles = "admin,moderator")]
         public IActionResult Upsert(int? id)
         {
             CRUDProductVM crudProductVM = new CRUDProductVM()
@@ -80,6 +82,7 @@ namespace LetiSec.Controllers
         }
 
         [HttpPost]
+        //[Authorize(Roles = "admin,moderator")]
         public IActionResult Upsert(CRUDProductVM productVM)
         {
             
@@ -148,6 +151,7 @@ namespace LetiSec.Controllers
 
         }
 
+
         public IActionResult ProductDetails(int id)
         {
 
@@ -173,7 +177,8 @@ namespace LetiSec.Controllers
             return View(productDetailsVM);
 
         }
-        
+
+        //[Authorize(Roles = "admin,moderator")]
         public IActionResult Delete(int id)
         {
             var product = _db.Products.Find(id);
