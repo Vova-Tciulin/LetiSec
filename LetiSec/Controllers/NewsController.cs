@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LetiSec.Controllers
 {
-    [Authorize]
+    
     public class NewsController : Controller
     {
         private readonly LetiSecDB _db;
@@ -26,7 +26,7 @@ namespace LetiSec.Controllers
             _db = db;
             _webHostEnvironment = webHostEnvironment;
         }
-        // [Authorize(Roles = "admin,moderator")]
+         [Authorize(Roles = "admin,moderator")]
         [HttpGet]
         public IActionResult CRUD()
         {
@@ -42,7 +42,7 @@ namespace LetiSec.Controllers
 
             return View(news);
         }
-        // [Authorize(Roles = "admin,moderator")]
+        [Authorize(Roles = "admin,moderator")]
         [HttpGet]
         public IActionResult Upsert(int? id)
         {
@@ -62,7 +62,7 @@ namespace LetiSec.Controllers
             }
 
         }
-        // [Authorize(Roles = "admin,moderator")]
+         [Authorize(Roles = "admin,moderator")]
         [HttpPost]
         public IActionResult Upsert(News news)
         {
@@ -142,7 +142,7 @@ namespace LetiSec.Controllers
             News news = _db.News.FirstOrDefault(u=>u.Id==id);
             return View(news);
         }
-        // [Authorize(Roles = "admin,moderator")]
+         [Authorize(Roles = "admin,moderator")]
         public IActionResult Delete(int id)
         {
             var news = _db.News.Find(id);
