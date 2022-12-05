@@ -1,11 +1,19 @@
-﻿@model Product
+﻿@model ProductDetailsVM
 
 <div>
-    <p>Название продукта: @Model.Name</p>
-    <img style="width:100px; height:100px" src="/images/product/@Model.Img" alt="ошибка загрузки" />
-    <p>Категория: @Model.Category.Name</p>
+    <p>Название продукта: @Model.Product.Name</p>
+    <img style="width:100px; height:100px" src="/images/products/@Model.Product.Img" alt="ошибка загрузки" />
+    <p>Категория: @Model.Product.Category.Name</p>
     <h3>Описание продукта</h3>
-    @Html.Raw(Model.Description)
-    <p>Цена: @Model.Price</p>
-    <a asp-action="Cart" asp-controller="Cart">Добавить в корзину</a>
+    @Html.Raw(Model.Product.Description)
+    <p>Цена: @Model.Product.Price</p>
+    
+    @if(Model.isContains)
+    {
+        <a asp-action="RemoveProduct" asp-controller="Cart" asp-route-path="@ViewBag.ReturnUrl">Убрать из корзины</a>
+    }
+   
+    <a asp-action="AddProduct" asp-controller="Cart" asp-route-id="@Model.Product.Id">Добавить в корзину</a>
+    
+   
 </div>

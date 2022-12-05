@@ -39,6 +39,62 @@ namespace LetiSec.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("LetiSec.Models.DbModel.News", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("Date");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Img")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortDesc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("News");
+                });
+
+            modelBuilder.Entity("LetiSec.Models.DbModel.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("Date");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("LetiSec.Models.DbModel.Product", b =>
                 {
                     b.Property<int?>("Id")
@@ -97,6 +153,16 @@ namespace LetiSec.Migrations
                         {
                             Id = 2,
                             Name = "user"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "moderator"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "support"
                         });
                 });
 
@@ -125,8 +191,7 @@ namespace LetiSec.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleId")
-                        .IsUnique();
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
 
@@ -136,9 +201,26 @@ namespace LetiSec.Migrations
                             Id = 1,
                             Email = "admin@mail.ru",
                             Name = "Vladimir",
-                            Password = "AQAAAAEAACcQAAAAEJYISQ0T74lMUT7+N1EgSUO4Jd0086ikLG10Du3sP/k14jSNHfIRmKGPDPK8fo0isw==",
+                            Password = "AQAAAAEAACcQAAAAENJM1tsVGmau/QQI5fBO7Z1i+uaLlUPx0Vxsgk0j9E/oHJ7i6TEZgyW5kWPpN3Njdg==",
                             RoleId = 1
                         });
+                });
+
+            modelBuilder.Entity("LetiSec.Models.DbModel.Order", b =>
+                {
+                    b.HasOne("LetiSec.Models.DbModel.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LetiSec.Models.DbModel.User", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("LetiSec.Models.DbModel.Product", b =>
@@ -159,6 +241,13 @@ namespace LetiSec.Migrations
                         .HasForeignKey("LetiSec.Models.DbModel.User", "RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("LetiSec.Models.DbModel.Category", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("LetiSec.Models.DbModel.Role", b =>

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<User>
+
+
+    <div>
+        <ul>
+           @foreach(var user in Model)
+           {
+               <li>
+                   Имя: @user.Name Почта: @user.Email Роль: @user.Role.Name 
+                   <a asp-action="UserDetails" asp-controller="Admin" asp-route-id="@user.Id">Подробнее</a>
+               </li>
+           }
+        </ul>
+    </div>
+

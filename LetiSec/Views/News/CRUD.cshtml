@@ -1,0 +1,13 @@
+﻿@model IEnumerable<News>
+
+    <a asp-action="Upsert">создать</a>
+<ul>
+    @foreach(var news in Model)
+    {
+        <li>
+            @news.ShortDesc<br>
+            <a asp-action="Upsert" asp-route-id="@news.Id">редактировать</a>
+            <a asp-action="Delete" asp-route-id="@news.Id">удалить</a>
+        </li>
+    }
+</ul>

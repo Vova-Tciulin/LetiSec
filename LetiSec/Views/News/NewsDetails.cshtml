@@ -1,0 +1,10 @@
+﻿@model News
+
+<div>
+    <p>Название: @Model.ShortDesc</p>
+    <img style="width:100px; height:100px" src="/images/news/@Model.Img" alt="ошибка загрузки" />
+ 
+    @Html.Raw(Model.Description)
+
+
+</div>

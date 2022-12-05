@@ -1,8 +1,14 @@
-﻿<!DOCTYPE HTML>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@using LetiSec.Utility
+
+
+<!DOCTYPE HTML>
 
 <html>
 <head>
 
+<<<<<<< HEAD
     <title>LetiSec</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -11,6 +17,18 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
+=======
+	<title>LetiSec</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="~/css/main.css" />
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	
+>>>>>>> Dev
 </head>
 <body class="homepage is-preload">
     <div id="page-wrapper">
@@ -23,6 +41,7 @@
                 <header id="header">
                     <div class="inner">
 
+<<<<<<< HEAD
                         <!-- Logo -->
                         <h1><a href="index.html" id="logo">LetiSec</a></h1>
 
@@ -42,10 +61,80 @@
                                 <li><a asp-action="Home">Корзина</a></li>
                             </ul>
                         </nav>
+=======
+						<!-- Logo -->
+						<a href="/" id="logo"><img src="/images/LetiSec.svg" alt="LetiSec" width="220" height="100"></a>
+
+						<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li class="current_page_item"><a asp-action="Home" asp-controller="Home">Главная</a></li>
+								<li>
+									@if (User.IsInRole("admin"))
+									{
+										<a asp-action="ViewUsers" asp-controller="Admin">Админ</a>
+									}
+								</li>
+								<li>
+									@if(User.IsInRole("admin")||User.IsInRole("moderator") )
+									{
+										<a href="#">Создание</a>
+										<ul>	
+											<li><a asp-action="ViewCategory" asp-controller="Category">Категории</a></li>
+											<li><a asp-action="CRUD" asp-controller="Product">Создание товара</a></li>
+											<li><a asp-action="CRUD" asp-controller="News">Создание новостей</a></li>
+										</ul>
+									}
+									
+								</li>
+								<li><a asp-action="ViewNews" asp-controller="News">Новости</a></li>
+								<li><a asp-action="ViewProduct" asp-controller="Product">Товары</a></li>
+								@if(User.Identity.Name==null)
+								{
+									<li><a asp-action="Home" asp-controller="Account">Вход</a></li>
+								}
+								else
+								{
+									<li><a asp-action="Home" asp-controller="Account">Аккаунт</a></li>
+								}
+								
+								<li>
+									@if(HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(WebConst.SessionCart)!=null)
+										{
+										<a asp-action="ViewCart" asp-controller="Cart">
+											@{
+												var count = HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(WebConst.SessionCart).Count;
+											}
+											<i class="fas fa-shopping-cart"></i>&nbsp;(@count)
+											</a>
+										}
+										else
+										{
+											<a asp-action="ViewCart" asp-controller="Cart">
+											<i class="fas fa-shopping-cart"></i>&nbsp;(0)
+											</a>
+										}
+								</li>
+							</ul>
+						</nav>
+>>>>>>> Dev
 
                     </div>
                 </header>
 
+<<<<<<< HEAD
+=======
+				@*<!-- Banner -->
+				<div id="banner">
+					<h2>
+						<strong>ZeroFour:</strong> A free responsive site template
+						<br />
+						built on HTML5 and CSS3 by <a href="http://html5up.net">HTML5 UP</a>
+					</h2>
+					<p>Does this statement make you want to click the big shiny button?</p>
+					<a href="#" class="button large icon solid fa-check-circle">Yes it does</a>
+				</div>*@
+>>>>>>> Dev
 
                 <!-- Banner -->
                 <div id="banner">
@@ -61,6 +150,7 @@
         <!--Место для RenderSection-->
         @RenderBody()
 
+<<<<<<< HEAD
         <!-- Footer Wrapper -->
         <div id="footer-wrapper">
             <footer id="footer" class="container">
@@ -88,6 +178,17 @@
                     </div>
                     <div class="col-3 col-6-medium col-12-small">
 
+=======
+						<!-- Links -->
+						<section>
+							<h2>Магазин</h2>
+							<ul class="divided">
+								<li><a href="/">Главная страница</a></li>
+								<li><a href="/News/ViewNews">Новости</a></li>
+								<li><a href="/Product/ViewProduct">Товары</a></li>
+							</ul>
+						</section>
+>>>>>>> Dev
 
                         <!-- Links -->
                         <section>
@@ -100,6 +201,7 @@
                             </ul>
                         </section>
 
+<<<<<<< HEAD
                     </div>
                     <div class="col-6 col-12-medium imp-medium">
 
@@ -144,9 +246,33 @@
                 </div>
             </footer>
         </div>
+=======
+						<!-- Contact -->
+						<section>
+							<h2>Связаться с нами</h2>
+							<div>
+								<div class="row">
+									<div class="col-6 col-12-small">
+										<dl class="contact">
+											<dt>WWW</dt>
+											<dd><a href="#">letisec.ru</a></dd>
+											<dt>Email</dt>
+											<dd><a href="#">leti@letisec.ru</a></dd>
+										</dl>
+									</div>
+								</div>
+							</div>
+						</section>
+
+					</div>
+				</div>
+			</footer>
+		</div>
+>>>>>>> Dev
 
     </div>
 
+<<<<<<< HEAD
     <!-- Scripts -->
     <script src="~/js/jquery.min.js"></script>
     <script src="~/js/jquery.dropotron.min.js"></script>
@@ -157,6 +283,17 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+=======
+	<!-- Scripts -->
+	<script src="~/js/jquery.min.js"></script>
+	<script src="~/js/jquery.dropotron.min.js"></script>
+	<script src="~/js/browser.min.js"></script>
+	<script src="~/js/breakpoints.min.js"></script>
+	<script src="~/js/util.js"></script>
+	<script src="~/js/main.js"></script>
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+>>>>>>> Dev
 
 </body>
 </html>

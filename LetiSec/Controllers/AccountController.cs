@@ -28,13 +28,14 @@ namespace LetiSec.Controllers
         [Authorize]
         public IActionResult Home()
         {
+            //поменять order
             string name = User.Identity.Name;
-           
-            User user = _db.Users.FirstOrDefault(u => u.Email == name);
-            Role role = _db.Roles.FirstOrDefault(u => u.Id == user.RoleId);
-            role.User = user;
 
-            return View(role);
+            User user = _db.Users.Include(u => u.Role).FirstOrDefault(u => u.Email == name);
+            IEnumerable<Order> orders = _db.Orders.Include(u => u.Product).Where(u => u.UserId == user.Id);
+            user.Orders = orders.ToList();
+
+            return View(user);
         }
 
 
@@ -45,6 +46,7 @@ namespace LetiSec.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Registration(RegisterModel userModel)
         {
             if (ModelState.IsValid)
@@ -83,7 +85,7 @@ namespace LetiSec.Controllers
             {
                 PasswordHasher<User> password = new Microsoft.AspNetCore.Identity.PasswordHasher<User>();
                 
-                User user = _db.Users.FirstOrDefault(u => u.Email == loginUser.Email);
+                User user = _db.Users.Include(u=>u.Role).FirstOrDefault(u => u.Email == loginUser.Email);
 
                 if (user != null)
                 {
@@ -91,9 +93,8 @@ namespace LetiSec.Controllers
 
                     if(checkPass)
                     {
-                        var role = _db.Roles.FirstOrDefault(p => p.User.Name == user.Name);
-
-                        await Authenticate(loginUser.Email, role.Name);
+                        
+                        await Authenticate(loginUser.Email, user.Role.Name);
                         return RedirectToAction("Home", "Home");
                     }
                     else
@@ -105,6 +106,8 @@ namespace LetiSec.Controllers
             }
             return View(loginUser);
         }
+
+
         [Authorize]
         public IActionResult LogOut()
         {
