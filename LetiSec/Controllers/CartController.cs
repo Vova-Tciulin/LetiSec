@@ -102,7 +102,7 @@ namespace LetiSec.Controllers
         }
 
 
-       // [Authorize]
+        [Authorize]
         public IActionResult BuyProduct()
         {
             //поменять order

@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LetiSec.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class NewsController : Controller
     {
         private readonly LetiSecDB _db;
