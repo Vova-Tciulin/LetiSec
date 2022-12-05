@@ -1,16 +1,18 @@
 ﻿@model News
 
-@if (Model.Id == 0)
-{
-    <p>Создание </p>
-    <label asp-for="@Model.Id" hidden></label>
-}
-else
-{
-    <p>Обновление</p>
-}
+
 
 <form method="post" enctype="multipart/form-data">
+    @if (Model.Id == 0)
+    {
+        <p>Создание </p>
+        <input asp-for="@Model.Id" hidden>
+    }
+    else
+    {
+        <p>Обновление</p>
+        <input asp-for="@Model.Id" hidden>
+    }
     <div>
         <label asp-for="ShortDesc">короткое описание</label>
         <input asp-for="ShortDesc" />

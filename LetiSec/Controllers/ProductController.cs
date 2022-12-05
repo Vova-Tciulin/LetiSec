@@ -94,7 +94,16 @@ namespace LetiSec.Controllers
                 if (productVM.Product.Id ==0)
                 {
                     //create
-
+                    if (files.Count == 0)
+                    {
+                        productVM.Categories = _db.Categories.Select(i => new SelectListItem
+                        {
+                            Text = i.Name,
+                            Value = i.Id.ToString()
+                        });
+                        return View(productVM);
+                    }
+                        
                     string path = webRoothPath + WebConst.ImageProductPath;
                     string fileName = Guid.NewGuid().ToString();
                     string extension = Path.GetExtension(files[0].FileName);
@@ -134,7 +143,10 @@ namespace LetiSec.Controllers
 
                         productVM.Product.Img = fileName + extension;
                     }
-
+                    else
+                    {
+                        productVM.Product.Img = oldProduct.Img;
+                    }
                     _db.Products.Update(productVM.Product);
 
                 }
