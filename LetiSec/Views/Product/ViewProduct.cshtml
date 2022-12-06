@@ -1,20 +1,25 @@
 ﻿@model ProductVM
 
+@{ var total_products = 0; }
+
 <div>
     <h2>Кнопки для сортировки категорий</h2>
-    <button>All</button>
-    @foreach(var category in Model.Categories)
-    {
-        <button>@category.Name</button>
-    }
+    <select id="select_category" onchange="display_category(this);">
+        <option selected>all</option>
+        @foreach(var category in Model.Categories)
+        {
+            <option value="@category.Name">@category.Name</option>
+        }
+    </select>
 </div>
 <div>
     <h2>Продукты</h2>
     <div style="display:flex; padding:10px;">
         @foreach(var product in Model.Products)
         {
-        
-            <div style="border:1px solid black; margin:10px;">
+            total_products += 1;
+
+            <div name="@product.Category.Name" id="div_@product.Id" style="border:1px solid black; margin:10px;">
                 <img style="width:100px;height:100px;" src="/images/products/@product.Img" alt="ошибка">
                 <p>@product.Name</p>
                 <p>@product.Price</p>
@@ -24,3 +29,31 @@
         }
     </div>
 </div>
+
+<script>
+    function display_category(category)
+    {
+        var total_products = @total_products;
+
+        if ( !category )
+            return null;
+
+        if ( typeof(category.value) === 'string' ) {
+            var cur_product;
+
+            for (var i = 1; i <= total_products; i++) {
+                cur_product = document.getElementById("div_" + i.toString());
+
+                console.log(cur_product.attributes.name.value, category.value);
+                if ( cur_product ) {
+                    if (cur_product.attributes.name.value !== category.value)
+                        cur_product.hidden = true;
+                    else
+                        cur_product.hidden = false;
+                }
+            }
+            
+        }
+            
+    }
+</script>
