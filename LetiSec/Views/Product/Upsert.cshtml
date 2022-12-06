@@ -1,16 +1,19 @@
 ﻿@model CRUDProductVM
 
-@if(Model.Product.Id==0)
-{
-    <p>Создание товара</p>
-    <label asp-for="@Model.Product.Id" hidden></label>
-}
-else
-{
-    <p>Обновление товара</p>
-}
+
 
 <form method="post" enctype="multipart/form-data">
+    @if(Model.Product.Id==0)
+    {
+        <p>Создание товара</p>
+        <label asp-for="@Model.Product.Id" hidden></label>
+    }
+    else
+    {
+        <p>Обновление товара</p>
+        <input asp-for="@Model.Product.Id" hidden>
+       
+    }
     <div>
         <label asp-for="Product.Name">Название товара</label>
         <input asp-for="Product.Name" />

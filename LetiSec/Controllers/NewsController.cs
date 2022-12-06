@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LetiSec.Controllers
 {
-    [Authorize]
+    
     public class NewsController : Controller
     {
         private readonly LetiSecDB _db;
@@ -26,7 +26,7 @@ namespace LetiSec.Controllers
             _db = db;
             _webHostEnvironment = webHostEnvironment;
         }
-
+         [Authorize(Roles = "admin,moderator")]
         [HttpGet]
         public IActionResult CRUD()
         {
@@ -42,7 +42,7 @@ namespace LetiSec.Controllers
 
             return View(news);
         }
-
+        [Authorize(Roles = "admin,moderator")]
         [HttpGet]
         public IActionResult Upsert(int? id)
         {
@@ -62,10 +62,11 @@ namespace LetiSec.Controllers
             }
 
         }
-
+         [Authorize(Roles = "admin,moderator")]
         [HttpPost]
         public IActionResult Upsert(News news)
         {
+            
 
             if (ModelState.IsValid)
             {
@@ -75,7 +76,8 @@ namespace LetiSec.Controllers
                 if (news.Id == 0)
                 {
                     //create
-
+                    if (files.Count == 0)
+                        return View(news);
                     string path = webRoothPath + WebConst.ImageNewsPath;
                     string fileName = Guid.NewGuid().ToString();
                     string extension = Path.GetExtension(files[0].FileName);
@@ -115,7 +117,10 @@ namespace LetiSec.Controllers
 
                         news.Img = fileName + extension;
                     }
-                    
+                    else
+                    {
+                        news.Img = oldNews.Img;
+                    }
                     _db.News.Update(news);
 
                 }
@@ -137,7 +142,7 @@ namespace LetiSec.Controllers
             News news = _db.News.FirstOrDefault(u=>u.Id==id);
             return View(news);
         }
-
+         [Authorize(Roles = "admin,moderator")]
         public IActionResult Delete(int id)
         {
             var news = _db.News.Find(id);
