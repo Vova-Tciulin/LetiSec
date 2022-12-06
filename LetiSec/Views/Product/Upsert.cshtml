@@ -35,20 +35,7 @@
         <p>Описание</p>
     </div>
     <div>
-        <script>
-            $(document).ready(function() {
-                $('.summernote').summernote({
-                    toolbar: [
-                        // [groupName, [list of button]]
-                        ['style', ['bold', 'italic', 'underline', 'clear']],
-                        ['fontsize', ['fontsize']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['height', ['height']]
-                    ]
-                });
-            });
-        </script>
+        
         <textarea asp-for="Product.Description"  class="summernote"></textarea>
         <span asp-validation-for="Product.Description" class="text-danger"></span>
     </div>
@@ -78,3 +65,17 @@
     </div>
 </form>
 
+<script>
+            $(document).ready(function() {
+                $('.summernote').summernote({
+                    toolbar: [
+                        // [groupName, [list of button]]
+                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                        ['fontsize', ['fontsize']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['height', ['height']]
+                    ]
+                });
+            });
+</script>

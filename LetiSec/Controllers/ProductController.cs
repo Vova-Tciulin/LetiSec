@@ -199,19 +199,23 @@ namespace LetiSec.Controllers
                 return NotFound();
             }
 
-            string upload = _webHostEnvironment.WebRootPath + WebConst.ImageProductPath;
-            var oldFile = Path.Combine(upload, product.Img);
-
-            if (System.IO.File.Exists(oldFile))
+            if(product.Img!=null)
             {
-                System.IO.File.Delete(oldFile);
+                string upload = _webHostEnvironment.WebRootPath + WebConst.ImageProductPath;
+                var oldFile = Path.Combine(upload, product.Img);
+
+                if (System.IO.File.Exists(oldFile))
+                {
+                    System.IO.File.Delete(oldFile);
+                }
+
             }
 
 
             _db.Products.Remove(product);
             _db.SaveChanges();
 
-            return RedirectToAction("CRUDProduct");
+            return RedirectToAction("CRUD");
         }
     }
 }
