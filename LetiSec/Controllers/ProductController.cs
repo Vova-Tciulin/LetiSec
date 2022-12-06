@@ -184,7 +184,7 @@ namespace LetiSec.Controllers
             else
                 productDetailsVM.isContains = false;
 
-            ViewBag.ReturnUrl = Request.Path.ToString();
+            ViewBag.ReturnUrl = Request.Path.ToString()+"/";
 
             return View(productDetailsVM);
 

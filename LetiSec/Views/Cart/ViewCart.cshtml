@@ -1,24 +1,71 @@
 ﻿@model List<Order>
 
-@if(Model.Count()==0)
-{
-    <h2>Корзина пуста</h2>
+@{
+	double price = 0;
+	double allPrice = 0;
 }
-<div>
-    <h1>Корзина</h1>
-        <ul>
-        @foreach(var order in Model)
-        {
-            <li>
-                @order.Product.Name @order.Product.Price<br>
-                Count: @order.Count
-                @{
-                    ViewBag.ReturnUrl += "/" + order.Product.Id;
-                }
-                <a asp-action="RemoveProduct" asp-controller="Cart" asp-route-path="@ViewBag.ReturnUrl">Удалить</a>
-            </li>
-        }
-    </ul>
-    
-    <a asp-action="BuyProduct" asp-controller="Cart">Купить</a>
-</div>
+
+@if(Model.Count==0)
+{
+	<h1 style="margin-bottom:25%; text-align:center">Корзина пуста</h1>
+}
+else
+{
+	<div class="container shoppingCart">
+
+		<section id="cart">
+			@foreach (var order in Model)
+			{
+				<article class="product">
+					<header>
+						<a class="remove">
+							<img src="@WebConst.ImageProductPath@order.Product.Img" alt="продукт">
+							<h3><a asp-action="RemoveProduct" asp-route-path="@ViewBag.ReturnUrl@order.Product.Id">Remove product</a></h3>
+						</a>
+					</header>
+
+					<div class="content">
+
+						<h1>@order.Product.Name</h1>
+
+					</div>
+
+					<footer class="content">
+						<a class="qt-minus" asp-action="RemoveOneProduct" asp-route-path="@ViewBag.ReturnUrl@order.Product.Id">-</a>
+						<span class="qt">@order.Count</span>
+						<a class="qt-plus" asp-action="AddProduct" asp-route-path="@ViewBag.ReturnUrl@order.Product.Id">+</a>
+
+						<h2 class="full-price">
+							@{
+								price = order.Count * order.Product.Price;
+								allPrice += price;
+							}
+							@price руб
+						</h2>
+
+						<h2 class="price">
+							@order.Product.Price руб
+						</h2>
+					</footer>
+				</article>
+
+			}
+		</section>
+
+	</div>
+
+	<footer id="site-footer">
+		<div class="container clearfix">
+
+
+
+			<div class="centered">
+				<h1 class="total">Всего: <span>@allPrice руб</span></h1>
+				<a asp-action="BuyProduct" class="btn">Купить</a>
+			</div>
+
+		</div>
+	</footer>
+
+
+}
