@@ -2,7 +2,7 @@
 
 @{ var total_products = 0; }
 
-<div>
+@*<div>
     <h2>Кнопки для сортировки категорий</h2>
     <select id="select_category" onchange="display_category(this);">
         <option selected>all</option>
@@ -11,12 +11,11 @@
             <option value="@category.Name">@category.Name</option>
         }
     </select>
-</div>
+</div>*@
 <div>
-    <h2>Продукты</h2>
+   
     <div style="display:flex; flex-wrap:wrap">
 
-    
         @foreach(var product in Model.Products)
         {
             total_products += 1;
@@ -30,8 +29,7 @@
                 </div>
                 <div class="product-details">
                     <span class="product-catagory">@product.Category.Name</span>
-                    <h4><a href="">@product.Name</a></h4>
-                
+                    <h4><a asp-action="ProductDetails" asp-controller="Product" asp-route-id="@product.Id">@product.Name</a></h4>
                     <div class="product-bottom-details">
                         <div class="product-price">@product.Price руб</div>
                        
@@ -48,7 +46,7 @@
     </div>
 </div>
 
-<script>
+@*<script>
     function display_category(category)
     {
         var total_products = @total_products;
@@ -74,4 +72,4 @@
         }
             
     }
-</script>
+</script>*@
