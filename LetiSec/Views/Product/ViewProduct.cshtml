@@ -30,7 +30,7 @@
                 </div>
                 <div class="product-details">
                     <span class="product-catagory">@product.Category.Name</span>
-                    <h4><a href="">@product.Name</a></h4>
+                    <h4><a asp-action="ProductDetails" asp-controller="Product" asp-route-id="@product.Id">@product.Name</a></h4>
                 
                     <div class="product-bottom-details">
                         <div class="product-price">@product.Price руб</div>
