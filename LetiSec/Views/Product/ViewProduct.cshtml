@@ -62,10 +62,10 @@
 
                 console.log(cur_product.attributes.name.value, category.value);
                 if ( cur_product ) {
-                    if (cur_product.attributes.name.value !== category.value)
-                        cur_product.hidden = true;
-                    else
+                    if (cur_product.attributes.name.value === category.value || category.value === 'all')
                         cur_product.hidden = false;
+                    else
+                        cur_product.hidden = true;
                 }
             }
             
