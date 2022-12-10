@@ -31,7 +31,7 @@ namespace LetiSec.Controllers
             string[] path1 = path.Split("/");
 
             int id = Int32.Parse(path1[3]);
-            if(path1.Length==5)
+            if (path1.Length == 5 && path1[4]!="")
             {
                 id= Int32.Parse(path1[4]);
             }

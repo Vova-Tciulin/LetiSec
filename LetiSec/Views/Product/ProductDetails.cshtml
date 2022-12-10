@@ -36,6 +36,6 @@
             <a asp-action="RemoveProduct" asp-controller="Cart" asp-route-path="@ViewBag.ReturnUrl"><button>Убрать из корзины</button></a>
         }
 
-        <a asp-action="AddProduct" asp-controller="Cart" asp-route-id="@Model.Product.Id"><button>Добавить в корзину</button></a>
+        <a asp-action="AddProduct" asp-controller="Cart" asp-route-path="@ViewBag.ReturnUrl"><button>Добавить в корзину</button></a>
     </p>
 </div>
