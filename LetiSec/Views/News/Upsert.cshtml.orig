@@ -1,8 +1,29 @@
-﻿@model CRUDProductVM
+﻿@model News
 
+<<<<<<< HEAD
 <div style="padding-top:50px;margin: auto;">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+=======
+
+
+<form method="post" enctype="multipart/form-data">
+    @if (Model.Id == 0)
+    {
+        <p>Создание </p>
+        <input asp-for="@Model.Id" hidden>
+    }
+    else
+    {
+        <p>Обновление</p>
+        <input asp-for="@Model.Id" hidden>
+    }
+    <div>
+        <label asp-for="ShortDesc">короткое описание</label>
+        <input asp-for="ShortDesc" />
+        <span asp-validation-for="ShortDesc"></span>
+    </div>
+>>>>>>> parent of 4b9791a (Добавлен дизайн страницы продукта)
 
             <div class="panel panel-default">
                 <div class="panel-body">

@@ -24,18 +24,18 @@
     <h4>Описание продукта:</h4>
 
     <p style="border-width: 3px; border-style: solid; padding: 1em;">
-    @Html.Raw(Model.Product.Description)
+        @Html.Raw(Model.Product.Description)
     </p>
 
     <br>
     <p class="like_button">Цена: @Model.Product.Price</p>
 
     <p>
-    @if(Model.isContains)
-    {
-        <a asp-action="RemoveProduct" asp-controller="Cart" asp-route-path="@ViewBag.ReturnUrl"><button>Убрать из корзины</button></a>
-    }
+        @if (Model.isContains)
+        {
+            <a asp-action="RemoveProduct" asp-controller="Cart" asp-route-path="@ViewBag.ReturnUrl"><button>Убрать из корзины</button></a>
+        }
 
-    <a asp-action="AddProduct" asp-controller="Cart" asp-route-id="@Model.Product.Id"><button>Добавить в корзину</button></a>
+        <a asp-action="AddProduct" asp-controller="Cart" asp-route-id="@Model.Product.Id"><button>Добавить в корзину</button></a>
     </p>
 </div>
