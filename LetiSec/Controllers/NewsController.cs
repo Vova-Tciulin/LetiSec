@@ -28,7 +28,7 @@ namespace LetiSec.Controllers
         }
          [Authorize(Roles = "admin,moderator")]
         [HttpGet]
-        public IActionResult CRUD()
+        public IActionResult Index()
         {
             IEnumerable<News> news = _db.News;
 
@@ -126,7 +126,7 @@ namespace LetiSec.Controllers
                 }
 
                 _db.SaveChanges();
-                return RedirectToAction("CRUD");
+                return RedirectToAction("Index");
             }
             else
             {
@@ -142,6 +142,8 @@ namespace LetiSec.Controllers
             News news = _db.News.FirstOrDefault(u=>u.Id==id);
             return View(news);
         }
+
+
          [Authorize(Roles = "admin,moderator")]
         public IActionResult Delete(int id)
         {
@@ -162,7 +164,7 @@ namespace LetiSec.Controllers
 
             _db.News.Remove(news);
             _db.SaveChanges();
-            return RedirectToAction("CRUD");
+            return RedirectToAction("Index");
         }
     }
 }

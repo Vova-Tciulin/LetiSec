@@ -1,4 +1,9 @@
-﻿.registration {
+﻿
+
+
+
+
+.registration {
     background-color: #214c84;
     background-blend-mode: overlay;
     display: flex;
@@ -461,7 +466,7 @@ a {
     float: right;
 }
 
-.btn {
+.btn1 {
     background: #53b5aa;
     border: 1px solid #999;
     border-style: none none solid none;
@@ -480,7 +485,7 @@ a {
     transition: all .2s linear;
 }
 
-    .btn:hover {
+    .btn1:hover {
         color: #fff;
         background: #429188;
     }
@@ -523,3 +528,12 @@ a {
 .added {
     margin: 0 -50px 0 0 !important;
 }
+
+
+
+
+
+
+
+
+
