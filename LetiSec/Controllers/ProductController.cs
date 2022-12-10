@@ -32,7 +32,7 @@ namespace LetiSec.Controllers
 
         [HttpGet]
         [Authorize(Roles = "admin,moderator")]
-        public IActionResult CRUD()
+        public IActionResult Index()
         {
             IEnumerable<Product> products = _db.Products.Include(u=>u.Category);
 
@@ -152,7 +152,7 @@ namespace LetiSec.Controllers
                 }
 
                 _db.SaveChanges();
-                return RedirectToAction("CRUD");
+                return RedirectToAction("Index");
             }
             else
             {
@@ -184,7 +184,7 @@ namespace LetiSec.Controllers
             else
                 productDetailsVM.isContains = false;
 
-            ViewBag.ReturnUrl = Request.Path.ToString();
+            ViewBag.ReturnUrl = Request.Path.ToString()+"/";
 
             return View(productDetailsVM);
 
@@ -215,7 +215,7 @@ namespace LetiSec.Controllers
             _db.Products.Remove(product);
             _db.SaveChanges();
 
-            return RedirectToAction("CRUD");
+            return RedirectToAction("Index");
         }
     }
 }
