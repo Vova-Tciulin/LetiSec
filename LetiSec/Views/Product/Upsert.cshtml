@@ -1,80 +1,106 @@
 ﻿@model CRUDProductVM
 
+<div style="padding-top:50px;margin: auto;">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
 
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                        @if (Model.Product.Id == 0)
+                        {
+                            <h1 style="text-align:center; margin-bottom:30px">Создание товара</h1>
+                            <input asp-for="@Model.Product.Id" hidden>
+                        }
+                        else
+                        {
+                           <h1 style="text-align:center; margin-bottom:30px">Обновление товара</h1>
+                           <input asp-for="@Model.Product.Id" hidden>
 
-<form method="post" enctype="multipart/form-data">
-    @if(Model.Product.Id==0)
-    {
-        <p>Создание товара</p>
-        <label asp-for="@Model.Product.Id" hidden></label>
-    }
-    else
-    {
-        <p>Обновление товара</p>
-        <input asp-for="@Model.Product.Id" hidden>
-       
-    }
-    <div>
-        <label asp-for="Product.Name">Название товара</label>
-        <input asp-for="Product.Name" />
-        <span asp-validation-for="Product.Name"></span>
+                        }
+                        <div class="form-group">
+                            <label asp-for="Product.Name" class="col-md-4 control-label">Название товара</label>
+                            <div class="col-md-6">
+                               
+                                <input asp-for="Product.Name" class="form-control" />
+                                <span asp-validation-for="Product.Name"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                           
+                            <label asp-for="Product.CategoryId" class="col-md-4 control-label">Категория</label>
+
+                            <div class="col-md-6">
+                                <select asp-for="Product.CategoryId" asp-items="@Model.Categories" class="form-control">
+                                    <option disabled selected>--Выберите категорию--</option>
+                                </select>
+                                <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Product.Description" class="col-md-4 control-label">Описание товара</label>
+                            <div class="col-md-6">
+                                <textarea asp-for="Product.Description" class="summernote" style="height:900px;"></textarea>
+                                <span asp-validation-for="Product.Description" class="text-danger"></span>
+                               
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Product.Price" class="col-md-4 control-label">Цена</label>
+                            <div class="col-md-6">
+                                <input asp-for="Product.Price" class="form-control" />
+                                <span asp-validation-for="Product.Price"></span>
+                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Изображение товара</label>
+                            <div class="col-md-6">
+                                <input type="file" name="files" id="uploadBox" multiple class="form-control" />
+                                @if (Model.Product.Id != 0)
+                                {
+                                    <img src="/images/products/@Model.Product.Img" style="margin-top:10px">
+                                }
+                            </div>
+                        </div>
+                        <div class="registration-cssave form-group" style="display:flex; justify-content:left">
+                           <div style="margin-left:50px">
+                               @if (Model.Product.Id == 0)
+                                {
+                                    <button class="btn btn-primary btn-lg create-account" type="submit">Создать</button>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-primary btn-lg create-account" type="submit">Обновить</button>
+                                }
+                           </div>
+                           
+                           
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div>
-        <label asp-for="Product.CategoryId">Категория</label>
-        
 
-        <select asp-for="Product.CategoryId" asp-items="@Model.Categories" class="form-control">
-            <option disabled selected>--Select Category--</option>
-        </select>
-        <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
-       
-    </div>
 
-    <div>
-        <p>Описание</p>
-    </div>
-    <div>
-        <script>
-            $(document).ready(function() {
-                $('.summernote').summernote({
-                    toolbar: [
-                        // [groupName, [list of button]]
-                        ['style', ['bold', 'italic', 'underline', 'clear']],
-                        ['fontsize', ['fontsize']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['height', ['height']]
-                    ]
-                });
-            });
-        </script>
-        <textarea asp-for="Product.Description"  class="summernote"></textarea>
-        <span asp-validation-for="Product.Description" class="text-danger"></span>
-    </div>
+<script>
+    $(document).ready(function () {
+        $('.summernote').summernote({
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']]
+                ],
+            height: 250
+        });
+    });
    
-    <div>
-        <label asp-for="Product.Price">Цена</label>
-        <input type="number" asp-for="Product.Price" />
-        <span asp-validation-for="Product.Price"></span>
-    </div>
-    <div>
-        <p>Фотография</p>
-        <input type="file" name="files" id="uploadBox" multiple class="form-control" />
-    </div>
-    @if(Model.Product.Id!=0)
-    {
-        <img src="/images/products/@Model.Product.Img">
-    }
-    <div>
-        @if (Model.Product.Id == 0)
-        {
-            <button type="submit">Создать</button>
-        }
-        else
-        {
-            <button type="submit">Обновить</button>
-        }
-    </div>
-</form>
-
+            
+</script>

@@ -26,8 +26,16 @@ namespace LetiSec.Controllers
             _HttpContextAccessor = HttpContextAccessor;
         }
 
-        public IActionResult AddProduct(int id)
+        public IActionResult AddProduct(string path)
         {
+            string[] path1 = path.Split("/");
+
+            int id = Int32.Parse(path1[3]);
+            if (path1.Length == 5 && path1[4]!="")
+            {
+                id= Int32.Parse(path1[4]);
+            }
+
             ShoppingCart cart = new ShoppingCart();
             cart.ProductId = id;
             List<ShoppingCart> shoppingCarts = new List<ShoppingCart>();
@@ -39,8 +47,10 @@ namespace LetiSec.Controllers
             shoppingCarts.Add(cart);
             _HttpContextAccessor.HttpContext.Session.Set<List<ShoppingCart>>(WebConst.SessionCart, shoppingCarts);
 
-            //сделать возврат на ту страницу, с которой был сделан переход
-            return RedirectToAction("ProductDetails", "Product", new {id=id});
+            string action = path1[2];
+            string controller = path1[1];
+
+            return RedirectToAction(action, controller, new { id = id });
         }
 
         public IActionResult ViewCart(int?id)
@@ -60,7 +70,7 @@ namespace LetiSec.Controllers
            
             //получаем товар по id
             IEnumerable<Product> productsDb = _db.Products.Where(u => productId.Contains(u.Id));
-            ViewBag.ReturnUrl = Request.Path.ToString();
+            ViewBag.ReturnUrl = Request.Path.ToString()+"/";
 
             foreach(var product in productsDb)
             {
@@ -81,6 +91,10 @@ namespace LetiSec.Controllers
             string[] path1 = path.Split("/");
 
             int id = Int32.Parse(path1[3]);
+            if (path1.Length == 5)
+            {
+                id = Int32.Parse(path1[4]);
+            }
 
             ShoppingCart cart = new ShoppingCart();
             cart.ProductId = id;
@@ -99,6 +113,31 @@ namespace LetiSec.Controllers
             string controller = path1[1];
 
             return RedirectToAction(action, controller, new {id=id});
+        }
+        public IActionResult RemoveOneProduct(string path)
+        {
+            string[] path1 = path.Split("/");
+
+            int id = Int32.Parse(path1[3]);
+            if (path1.Length == 5)
+            {
+                id = Int32.Parse(path1[4]);
+            }
+
+            List<ShoppingCart> shoppingCarts = new List<ShoppingCart>();
+            if (_HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(WebConst.SessionCart) != null)
+            {
+                shoppingCarts = _HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(WebConst.SessionCart);
+            }
+            ShoppingCart cart = shoppingCarts.FirstOrDefault(u => u.ProductId == id);
+            shoppingCarts.Remove(cart);
+
+            _HttpContextAccessor.HttpContext.Session.Set<List<ShoppingCart>>(WebConst.SessionCart, shoppingCarts);
+
+            string action = path1[2];
+            string controller = path1[1];
+
+            return RedirectToAction(action, controller, new { id = id });
         }
 
 

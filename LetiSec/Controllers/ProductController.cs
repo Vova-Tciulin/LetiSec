@@ -32,7 +32,7 @@ namespace LetiSec.Controllers
 
         [HttpGet]
         [Authorize(Roles = "admin,moderator")]
-        public IActionResult CRUD()
+        public IActionResult Index()
         {
             IEnumerable<Product> products = _db.Products.Include(u=>u.Category);
 
@@ -152,7 +152,7 @@ namespace LetiSec.Controllers
                 }
 
                 _db.SaveChanges();
-                return RedirectToAction("CRUD");
+                return RedirectToAction("Index");
             }
             else
             {
@@ -184,7 +184,7 @@ namespace LetiSec.Controllers
             else
                 productDetailsVM.isContains = false;
 
-            ViewBag.ReturnUrl = Request.Path.ToString();
+            ViewBag.ReturnUrl = Request.Path.ToString()+"/";
 
             return View(productDetailsVM);
 
@@ -199,19 +199,23 @@ namespace LetiSec.Controllers
                 return NotFound();
             }
 
-            string upload = _webHostEnvironment.WebRootPath + WebConst.ImageProductPath;
-            var oldFile = Path.Combine(upload, product.Img);
-
-            if (System.IO.File.Exists(oldFile))
+            if(product.Img!=null)
             {
-                System.IO.File.Delete(oldFile);
+                string upload = _webHostEnvironment.WebRootPath + WebConst.ImageProductPath;
+                var oldFile = Path.Combine(upload, product.Img);
+
+                if (System.IO.File.Exists(oldFile))
+                {
+                    System.IO.File.Delete(oldFile);
+                }
+
             }
 
 
             _db.Products.Remove(product);
             _db.SaveChanges();
 
-            return RedirectToAction("CRUDProduct");
+            return RedirectToAction("Index");
         }
     }
 }

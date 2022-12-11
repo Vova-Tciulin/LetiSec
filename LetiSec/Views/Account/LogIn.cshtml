@@ -1,26 +1,29 @@
 ﻿@model LoginModel
 
-<div class="logInUp"  >
 
-<form asp-action="LogIn" method="post">
+
+<section class="registration">
+    <div class="registration-cssave">
+        <form asp-action="LogIn" method="post">
+            <h3 class="text-center">Вход</h3>
+            <div class="form-group">
+                <input  asp-for="Email" class="form-control item" type="text"  id="username" placeholder="Логин" required>
+                <span asp-validation-for="Email"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Password" class="form-control item" type="password"id="password" placeholder="Пароль" required>
+                <span asp-validation-for="Password"></span>
+            </div>
+   
+            <div class="form-group">
+                <button class="btn btn-primary btn-block create-account" type="submit">Вход в аккаунт</button>
+            </div>
+            <div class="form-group">
+                <p class="text-center">Нет аккаунта?<a asp-action="Registration">Регистрация</a></p>
+
+            </div>
+        </form>
+        
+    </div>
     
-    <div class="mb-3">
-        <label asp-for="Email" class="form-label"></label>
-        <input asp-for="Email" class="form-control" />
-        <a><span asp-validation-for="Email"></span></a>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Password" class="form-label"></label>
-        <input asp-for="Password" class="form-control"/>
-        <a><span asp-validation-for="Password"></span></a>
-    </div >
-    <div class="mb-3">
-        <input type="submit" value="Вход" class="btn btn-primary"/>
-        <a asp-action="Registration" asp-controller="Account" class="btn btn-primary">Регистрация </a>
-    </div>
-
-
-</form>
-
-</div>
-
+</section>
