@@ -1,18 +1,28 @@
 ﻿@model IEnumerable<News>
 
-<div>
-    <h2>Продукты</h2>
-   
-        @foreach (var news in Model)
-        {
+<div class="wrapper style3">
+	<div class="inner">
+		<div class="container">
+			<div class="row">
+				<div class="col-8 col-12-medium">
 
-            <div style="border:1px solid black; margin:10px;">
-                <img style="width:100px;height:100px;" src="/images/news/@news.Img" alt="ошибка">
-                <p>@news.ShortDesc</p>
-         
-                <a asp-action="NewsDetails" asp-controller="News" asp-route-id="@news.Id">Подробнее</a>
-            </div>
+					<section class="box article-list">
+						<h2 class="icon fa-file-alt">Новости</h2>
 
-        }
-    </div>
+						@foreach (var news in Model)
+						{					
+							
+							<article class="box excerpt">
+								<a href="#" class="image left"><img src="/images/news/@news.Img" alt="" /></a>
+								<div>
+									<p>@news.ShortDesc</p>
+								</div>
+							</article>
+						}
+
+					</section>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
