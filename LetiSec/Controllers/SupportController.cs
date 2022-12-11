@@ -36,13 +36,16 @@ namespace LetiSec.Controllers
             SuppMessage message = new SuppMessage();
             message.UserId = user.Id;
             message.Email = user.Email;
-            return View(message);
+            SupportVM support = new SupportVM();
+            support.SuppMessage = message;
+
+            return View(support);
         }
         [HttpPost]
-        public IActionResult NewMessage(SuppMessage message)
+        public IActionResult NewMessage(SupportVM message)
         {
             //добавить почту
-            if (ModelState.IsValid)
+            if (message.Questions!=null||message.SuppMessage.ShortDescription!=null)
             {
                 var files = HttpContext.Request.Form.Files;
                 string webRoothPath = _webHostEnvironment.WebRootPath;
@@ -58,11 +61,26 @@ namespace LetiSec.Controllers
                         files[0].CopyTo(fileStream);
                     }
 
-                    message.Img = fileName + extension;
+                    message.SuppMessage.Img = fileName + extension;
                 }
-                message.IsAnswer = false;
-                message.Date = DateTime.Now;
-                _db.SuppMessages.Add(message);
+                message.SuppMessage.IsAnswer = false;
+                message.SuppMessage.IsFirst = true;
+               
+                message.SuppMessage.Time = DateTime.UtcNow;
+
+
+                _db.SuppMessages.Add(message.SuppMessage);
+                _db.SaveChanges();
+
+                SuppMessage msg = _db.SuppMessages.FirstOrDefault(u => u.Email == message.SuppMessage.Email&&u.IsFirst==true);
+                msg.IsFirst = false;
+
+                SuppQuestions suppQuestions = new SuppQuestions();
+                suppQuestions.Questions = message.Questions;
+                suppQuestions.SuppMessageId = message.SuppMessage.Id;
+                suppQuestions.Time = DateTime.UtcNow;
+                _db.SuppQuestions.Add(suppQuestions);
+                _db.SuppMessages.Update(msg);
                 _db.SaveChanges();
                 return RedirectToAction("SendMsg");
             }
@@ -70,6 +88,55 @@ namespace LetiSec.Controllers
             {
                 return View(message);
             }
+        }
+
+        [HttpGet]
+        public IActionResult ChatBox(int id)
+        {
+            SuppMessage message = _db.SuppMessages.Include(u => u.SuppQuestions).Include(u=>u.SuppAnswers).Include(u=>u.User).FirstOrDefault(u => u.Id == id);
+            
+
+            ChatBoxVM chat = new ChatBoxVM();
+            chat.SuppMessage = message;
+            
+            foreach(var userMsg in message.SuppQuestions)
+            {
+                AllMessage msg2 = new AllMessage();
+                msg2.Msg = userMsg.Questions;
+                msg2.Date = userMsg.Time;
+                msg2.Name = message.User.Name;
+                chat.Msg.Add(msg2);
+            }
+            foreach(var moderMsg in message.SuppAnswers)
+            {
+                chat.Msg.Add(new AllMessage
+                {
+                    Msg = moderMsg.Answer,
+                    Date = moderMsg.Time,
+                    Name = "support"
+                });
+            }
+
+            chat.Msg = (from p in chat.Msg
+                       orderby p.Date
+                       select p).ToList();
+            return View(chat);
+        }
+
+        public IActionResult AddMsg(ChatBoxVM box)
+        {
+            //пользователь
+            User user = _db.Users.Include(u => u.Role).Include(u => u.SuppMessages).FirstOrDefault(u => u.Id == box.SuppMessage.User.Id);
+
+            SuppQuestions questions = new SuppQuestions();
+            questions.Questions = box.SuppMessage.ShortDescription;
+            questions.SuppMessageId = box.SuppMessage.Id;
+            questions.Time= DateTime.UtcNow;
+
+            _db.SuppQuestions.Add(questions);
+            _db.SaveChanges();
+
+            return RedirectToAction("ChatBox","Support", new { id = box.SuppMessage.Id });
         }
 
         public IActionResult SendMsg()

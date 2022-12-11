@@ -4,6 +4,7 @@ using LetiSec.Models.DbModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LetiSec.Migrations
 {
     [DbContext(typeof(LetiSecDB))]
-    partial class LetiSecDBModelSnapshot : ModelSnapshot
+    [Migration("20221211104716_updatesuppmsg4")]
+    partial class updatesuppmsg4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,9 +184,6 @@ namespace LetiSec.Migrations
                     b.Property<int>("SuppMessageId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -201,6 +201,9 @@ namespace LetiSec.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("Date");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -247,9 +250,6 @@ namespace LetiSec.Migrations
                     b.Property<int>("SuppMessageId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
                     b.HasIndex("SuppMessageId");
@@ -292,7 +292,7 @@ namespace LetiSec.Migrations
                             Id = 1,
                             Email = "admin@mail.ru",
                             Name = "Vladimir",
-                            Password = "AQAAAAEAACcQAAAAEJzWP9ymzyMZCv7UFz0aZ6Ukxe93sHnMfnnLVBd4HRQW8qQomJ7BvQ8l5snI+Ow/gA==",
+                            Password = "AQAAAAEAACcQAAAAECl0VRSQ7yFcz6M0rkXJEBhf23BUKP5LmezXo8I4CIsrVh1V2rnUIZCuDlZXpAmGVg==",
                             RoleId = 1
                         });
                 });

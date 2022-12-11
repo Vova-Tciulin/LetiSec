@@ -15,7 +15,8 @@ namespace LetiSec.Models.DbModel
         public DbSet<Order> Orders { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<SuppMessage> SuppMessages { get; set; }
-
+        public DbSet<SuppAnswer> SuppAnswers { get; set; }
+        public DbSet<SuppQuestions> SuppQuestions { get; set; }
 
         public LetiSecDB(DbContextOptions options)
             : base(options)

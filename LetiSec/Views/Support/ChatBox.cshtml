@@ -1,0 +1,46 @@
+﻿@model ChatBoxVM
+
+
+
+<div class="outerbg">
+  <div class="chatboxout">
+    <div class="chatboxin">
+
+        @foreach(var msg in Model.Msg)
+        {
+            if(msg.Name!="support")
+            {
+                <div class="chat-container">
+                    <div class="chat-sender msg">
+                        <strong>@Model.SuppMessage.User.Name</strong>
+                        <div class="chatmsg">@msg.Msg</div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="chat-container">
+                    <div class="chat-respond msg">
+                        <div class="flippd">
+                            <strong>Тех. Поддержка</strong>
+                            <div class="chatmsg">
+                                @msg.Msg
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }         
+        }
+        <div>
+            <form asp-action="AddMsg" method="post">
+                <input asp-for="@Model.SuppMessage.User.Id" hidden/>
+                <input asp-for="@Model.SuppMessage.Id" hidden />
+                <textarea asp-for="@Model.SuppMessage.ShortDescription" style="height:100px">
+
+                </textarea>
+                <button>отправить</button>
+            </form>
+        </div>
+    </div>
+  </div>
+</div>
