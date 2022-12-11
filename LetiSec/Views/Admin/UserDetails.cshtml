@@ -3,9 +3,10 @@
 <div style="padding-top:50px;margin: auto;">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-
+            
             <div class="panel panel-default">
                 <div class="panel-body">
+                    <a asp-action="ViewUsers" class="btn btn-primary btn-lg create-account">Назад</a>
                     <form class="form-horizontal" method="post" enctype="multipart/form-data">
                         <input asp-for="User.Id" hidden />
                         <div class="form-group">
@@ -36,7 +37,8 @@
                             </div>
                         </div>
 
-                        <button class="btn btn-primary btn-lg create-account" type="submit">Создать</button>
+                        <button class="btn btn-primary btn-lg create-account" type="submit">Изменить</button>
+                        
 
                     </form>
                 </div>
