@@ -20,7 +20,7 @@ namespace LetiSec.Models.DbModel
         public int RoleId { get; set; }
         public Role Role { get; set; }
         public List<Order> Orders { get; set; }
-
+        public List<SuppMessage> SuppMessages { get; set; }
 
 
     }

@@ -1,0 +1,60 @@
+﻿@model SuppMessage
+
+
+<div style="padding-top:50px;margin: auto;">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                        <input asp-for="@Model.UserId" hidden />
+                        <h1 style="text-align:center; margin-bottom:30px">Задать вопрос</h1>
+                        
+                        <div class="form-group">
+                            <label asp-for="ShortDescription" class="col-md-4 control-label">Короткое описание проблемы</label>
+                            <div class="col-md-6">
+
+                                <input asp-for="ShortDescription" class="form-control" />
+                                <span asp-validation-for="ShortDescription"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label asp-for="Description" class="col-md-4 control-label">Описание вашей проблемы</label>
+                            <div class="col-md-6">
+                                <textarea asp-for="Description"  style="height:250px;"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email" class="col-md-4 control-label">Ваша почта</label>
+                            <div class="col-md-6">
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email"></span>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Прикрепить изображение</label>
+                            <div class="col-md-6">
+                                <input type="file" name="files" id="uploadBox" multiple class="form-control" />
+                                
+                            </div>
+                        </div>
+                        <div class="registration-cssave form-group" style="display:flex; justify-content:left">
+                            <div style="margin-left:50px">
+                                <button class="btn btn-primary btn-lg create-account" type="submit">Отправить заявку</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
