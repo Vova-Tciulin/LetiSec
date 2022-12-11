@@ -1,0 +1,11 @@
+﻿@model IEnumerable<SuppMessage>
+
+<ul>
+    @foreach(var msg in Model)
+    {
+        <li>
+            @msg.ShortDescription
+            <a asp-action="Details" asp-route-id="@msg.Id">Подробнее</a>
+        </li>
+    }
+</ul>

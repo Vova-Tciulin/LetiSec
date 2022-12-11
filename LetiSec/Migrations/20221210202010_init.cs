@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LetiSec.Migrations
 {
-    public partial class hj : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -124,6 +124,31 @@ namespace LetiSec.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "SuppMessages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ShortDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Img = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsAnswer = table.Column<bool>(type: "bit", nullable: false),
+                    Date = table.Column<DateTime>(type: "Date", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SuppMessages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SuppMessages_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "Name" },
@@ -138,7 +163,7 @@ namespace LetiSec.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Email", "Name", "Password", "RoleId" },
-                values: new object[] { 1, "admin@mail.ru", "Vladimir", "AQAAAAEAACcQAAAAENuOKLZX+ttPW/RQUhyPO4zjvqHd5tEaHix0u+IxfMmVDHA/IBnVNsMMJlUCgrBxrw==", 1 });
+                values: new object[] { 1, "admin@mail.ru", "Vladimir", "AQAAAAEAACcQAAAAEO1RKh/zN74J1ifQ5c/xkvG66PnG5lF66hMhGPX3a9pe9fnyKrTgMeLQfZ7GojuLnA==", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_ProductId",
@@ -156,6 +181,11 @@ namespace LetiSec.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SuppMessages_UserId",
+                table: "SuppMessages",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",
                 table: "Users",
                 column: "RoleId");
@@ -168,6 +198,9 @@ namespace LetiSec.Migrations
 
             migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "SuppMessages");
 
             migrationBuilder.DropTable(
                 name: "Products");

@@ -43,9 +43,10 @@
 							<ul>
 								<li class="current_page_item"><a asp-action="Home" asp-controller="Home">Главная</a></li>
 								<li>
-									@if (User.IsInRole("admin"))
+									@if (User.IsInRole("admin")||User.IsInRole("support"))
 									{
 										<a asp-action="ViewUsers" asp-controller="Admin">Админ</a>
+										<a asp-action="Index" asp-controller="Support">Вопросы</a>
 									}
 								</li>
 								<li>
@@ -62,6 +63,7 @@
 								</li>
 								<li><a asp-action="ViewNews" asp-controller="News">Новости</a></li>
 								<li><a asp-action="ViewProduct" asp-controller="Product">Товары</a></li>
+								<li><a asp-action="NewMessage" asp-controller="Support" asp-route-mail="@User.Identity.Name">Поддержка</a></li>
 								@if(User.Identity.Name==null)
 								{
 									<li><a asp-action="Home" asp-controller="Account">Вход</a></li>

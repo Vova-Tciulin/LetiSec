@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LetiSec.Migrations
 {
     [DbContext(typeof(LetiSecDB))]
-    [Migration("20221130152334_addDateToOrderDB")]
-    partial class addDateToOrderDB
+    [Migration("20221210202010_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,6 +41,33 @@ namespace LetiSec.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("LetiSec.Models.DbModel.News", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("Date");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Img")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortDesc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("News");
+                });
+
             modelBuilder.Entity("LetiSec.Models.DbModel.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -53,7 +80,7 @@ namespace LetiSec.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("Date");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -141,6 +168,45 @@ namespace LetiSec.Migrations
                         });
                 });
 
+            modelBuilder.Entity("LetiSec.Models.DbModel.SuppMessage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("Date");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Img")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAnswer")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ShortDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SuppMessages");
+                });
+
             modelBuilder.Entity("LetiSec.Models.DbModel.User", b =>
                 {
                     b.Property<int>("Id")
@@ -176,7 +242,7 @@ namespace LetiSec.Migrations
                             Id = 1,
                             Email = "admin@mail.ru",
                             Name = "Vladimir",
-                            Password = "AQAAAAEAACcQAAAAEFv+nUk0bOYMXJ2mAsW/rdVywginDfq83VBK60sS/pYWg1m7WDg5a7lOb32nWiV4SQ==",
+                            Password = "AQAAAAEAACcQAAAAEO1RKh/zN74J1ifQ5c/xkvG66PnG5lF66hMhGPX3a9pe9fnyKrTgMeLQfZ7GojuLnA==",
                             RoleId = 1
                         });
                 });
@@ -209,6 +275,17 @@ namespace LetiSec.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("LetiSec.Models.DbModel.SuppMessage", b =>
+                {
+                    b.HasOne("LetiSec.Models.DbModel.User", "User")
+                        .WithMany("SuppMessages")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("LetiSec.Models.DbModel.User", b =>
                 {
                     b.HasOne("LetiSec.Models.DbModel.Role", "Role")
@@ -233,6 +310,8 @@ namespace LetiSec.Migrations
             modelBuilder.Entity("LetiSec.Models.DbModel.User", b =>
                 {
                     b.Navigation("Orders");
+
+                    b.Navigation("SuppMessages");
                 });
 #pragma warning restore 612, 618
         }
