@@ -35,7 +35,14 @@
     {
         <a asp-action="RemoveProduct" asp-controller="Cart" asp-route-path="@ViewBag.ReturnUrl"><button>Убрать из корзины</button></a>
     }
+<<<<<<< HEAD
 
     <a asp-action="AddProduct" asp-controller="Cart" asp-route-id="@Model.Product.Id"><button>Добавить в корзину</button></a>
     </p>
+=======
+   
+    <a asp-action="AddProduct" asp-controller="Cart" asp-route-path="@ViewBag.ReturnUrl@Model.Product.Id">Добавить в корзину</a>
+    
+   
+>>>>>>> 64137fec8b352832dbfe1d66f1625167778568ee
 </div>
