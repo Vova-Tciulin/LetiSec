@@ -52,7 +52,7 @@ namespace LetiSec.Controllers
                 //create
                 if (files.Count != 0)
                 {
-                    string path = webRoothPath + WebConst.ImageProductPath;
+                    string path = webRoothPath + WebConst.ImageSupportPath;
                     string fileName = Guid.NewGuid().ToString();
                     string extension = Path.GetExtension(files[0].FileName);
 
@@ -91,7 +91,7 @@ namespace LetiSec.Controllers
         }
 
         [HttpGet]
-        public IActionResult ChatBox(int id)
+        public IActionResult ChatBox(int id, string role)
         {
             SuppMessage message = _db.SuppMessages.Include(u => u.SuppQuestions).Include(u=>u.SuppAnswers).Include(u=>u.User).FirstOrDefault(u => u.Id == id);
             
@@ -120,25 +120,59 @@ namespace LetiSec.Controllers
             chat.Msg = (from p in chat.Msg
                        orderby p.Date
                        select p).ToList();
+
+            if(role=="user")
+            {
+                chat.IsUser = true;
+            }
+            else
+            {
+                chat.IsUser = false;
+            }
             return View(chat);
         }
 
         public IActionResult AddMsg(ChatBoxVM box)
         {
             //пользователь
-            User user = _db.Users.Include(u => u.Role).Include(u => u.SuppMessages).FirstOrDefault(u => u.Id == box.SuppMessage.User.Id);
+            if(box.IsUser==true)
+            {
+                User user = _db.Users.Include(u => u.Role).Include(u => u.SuppMessages).FirstOrDefault(u => u.Id == box.SuppMessage.User.Id);
 
-            SuppQuestions questions = new SuppQuestions();
-            questions.Questions = box.SuppMessage.ShortDescription;
-            questions.SuppMessageId = box.SuppMessage.Id;
-            questions.Time= DateTime.UtcNow;
+                SuppQuestions questions = new SuppQuestions();
+                questions.Questions = box.SuppMessage.ShortDescription;
+                questions.SuppMessageId = box.SuppMessage.Id;
+                questions.Time = DateTime.UtcNow;
 
-            _db.SuppQuestions.Add(questions);
-            _db.SaveChanges();
 
-            return RedirectToAction("ChatBox","Support", new { id = box.SuppMessage.Id });
+                _db.SuppQuestions.Add(questions);
+                _db.SaveChanges();
+
+                return RedirectToAction("ChatBox", "Support", new { id = box.SuppMessage.Id, role="user" });
+            }
+            else
+            {
+                User user = _db.Users.Include(u => u.Role).Include(u => u.SuppMessages).FirstOrDefault(u => u.Id == box.SuppMessage.User.Id);
+
+                SuppAnswer questions = new SuppAnswer();
+                questions.Answer = box.SuppMessage.ShortDescription;
+                questions.SuppMessageId = box.SuppMessage.Id;
+                questions.Time = DateTime.UtcNow;
+
+                _db.SuppAnswers.Add(questions);
+                _db.SaveChanges();
+                return RedirectToAction("ChatBox", "Support", new { id = box.SuppMessage.Id, role="support" });
+            }
+            
         }
 
+        public IActionResult ViewDetails(int id)
+        {
+            SuppMessage message = _db.SuppMessages.Include(u => u.SuppQuestions)
+                                    .Include(u => u.SuppAnswers).Include(u => u.User).FirstOrDefault(u => u.Id == id);
+
+            return View(message);
+        }
         public IActionResult SendMsg()
         {
             return View();
