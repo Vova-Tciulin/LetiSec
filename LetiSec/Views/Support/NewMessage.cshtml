@@ -1,4 +1,4 @@
-﻿@model SuppMessage
+﻿@model SupportVM
 
 
 <div style="padding-top:50px;margin: auto;">
@@ -8,31 +8,31 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form class="form-horizontal" method="post" enctype="multipart/form-data">
-                        <input asp-for="@Model.UserId" hidden />
+                        <input asp-for="@Model.SuppMessage.UserId" hidden />
                         <h1 style="text-align:center; margin-bottom:30px">Задать вопрос</h1>
                         
                         <div class="form-group">
-                            <label asp-for="ShortDescription" class="col-md-4 control-label">Короткое описание проблемы</label>
+                            <label asp-for="@Model.SuppMessage.ShortDescription" class="col-md-4 control-label">Короткое описание проблемы</label>
                             <div class="col-md-6">
 
-                                <input asp-for="ShortDescription" class="form-control" />
-                                <span asp-validation-for="ShortDescription"></span>
+                                <input asp-for="@Model.SuppMessage.ShortDescription" class="form-control" />
+                                <span asp-validation-for="@Model.SuppMessage.ShortDescription"></span>
                             </div>
                         </div>
                         
                         <div class="form-group">
-                            <label asp-for="Description" class="col-md-4 control-label">Описание вашей проблемы</label>
+                            <label asp-for="@Model.Questions" class="col-md-4 control-label">Описание вашей проблемы</label>
                             <div class="col-md-6">
-                                <textarea asp-for="Description"  style="height:250px;"></textarea>
-                                <span asp-validation-for="Description" class="text-danger"></span>
+                                <textarea asp-for="@Model.Questions"  style="height:250px;"></textarea>
+                                @*<span asp-validation-for="Descriptions" class="text-danger"></span>*@
 
                             </div>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Email" class="col-md-4 control-label">Ваша почта</label>
+                            <label asp-for="@Model.SuppMessage.Email" class="col-md-4 control-label">Ваша почта</label>
                             <div class="col-md-6">
-                                <input asp-for="Email" class="form-control" />
-                                <span asp-validation-for="Email"></span>
+                                <input asp-for="@Model.SuppMessage.Email" class="form-control" />
+                                <span asp-validation-for="@Model.SuppMessage.Email"></span>
 
                             </div>
                         </div>
