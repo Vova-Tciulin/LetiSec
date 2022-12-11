@@ -52,10 +52,8 @@ namespace LetiSec.Controllers
             if (ModelState.IsValid)
             {
                 User user = await _db.Users.FirstOrDefaultAsync(u => u.Email == userModel.Email);
-                
                 if (user == null)
                 {
-
 
                     string hash = _hashPass.HashPas(user, userModel.Password);
                     user = new User { Email = userModel.Email, Name = userModel.Name, Password =hash, RoleId = 2 };

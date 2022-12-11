@@ -2,7 +2,7 @@
 
 @{ var total_products = 0; }
 
-@*<div>
+<div>
     <h2>Кнопки для сортировки категорий</h2>
     <select id="select_category" onchange="display_category(this);">
         <option selected>all</option>
@@ -11,7 +11,7 @@
             <option value="@category.Name">@category.Name</option>
         }
     </select>
-</div>*@
+</div>
 <div>
    
     <div style="display:flex; flex-wrap:wrap">
@@ -23,7 +23,7 @@
             <div class="product-card" style="margin:20px;" name="@product.Category.Name" id="div_@product.Id">
                 <div class="product-tumb">
                         <a asp-action="ProductDetails" asp-controller="Product" asp-route-id="@product.Id">
-                            <img src="@WebConst.ImageProductPath@product.Img" alt="product">
+                        <img src="@WebConst.ImageProductPath@product.Img" alt="product" onerror="this.onerror=null; this.src='/images/av_default.jpg'">
                         </a>
                
                 </div>
@@ -47,7 +47,7 @@
     </div>
 </div>
 
-@*<script>
+<script>
     function display_category(category)
     {
         var total_products = @total_products;
@@ -73,4 +73,4 @@
         }
             
     }
-</script>*@
+</script>
