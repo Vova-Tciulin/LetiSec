@@ -28,6 +28,13 @@ namespace LetiSec.Controllers
 
             return View(messages);
         }
+        [Authorize(Roles = "admin,support")]
+        public IActionResult ViewAllSupp()
+        {
+            IEnumerable<SuppMessage> messages = _db.SuppMessages;
+
+            return View(messages);
+        }
 
         [HttpGet]
         public IActionResult NewMessage(string mail)
@@ -66,7 +73,7 @@ namespace LetiSec.Controllers
                 message.SuppMessage.IsAnswer = false;
                 message.SuppMessage.IsFirst = true;
                
-                message.SuppMessage.Time = DateTime.UtcNow;
+                message.SuppMessage.Time = DateTime.Now;
 
 
                 _db.SuppMessages.Add(message.SuppMessage);
@@ -78,7 +85,7 @@ namespace LetiSec.Controllers
                 SuppQuestions suppQuestions = new SuppQuestions();
                 suppQuestions.Questions = message.Questions;
                 suppQuestions.SuppMessageId = message.SuppMessage.Id;
-                suppQuestions.Time = DateTime.UtcNow;
+                suppQuestions.Time = DateTime.Now;
                 _db.SuppQuestions.Add(suppQuestions);
                 _db.SuppMessages.Update(msg);
                 _db.SaveChanges();
@@ -134,17 +141,28 @@ namespace LetiSec.Controllers
 
         public IActionResult AddMsg(ChatBoxVM box)
         {
+            if (box.Message == null)
+            {
+                if(box.IsUser==true)
+                    return RedirectToAction("ChatBox", "Support", new { id = box.SuppMessage.Id, role = "user" });
+                else
+                    return RedirectToAction("ChatBox", "Support", new { id = box.SuppMessage.Id, role = "support" });
+            }
+               
             //пользователь
             if(box.IsUser==true)
             {
                 User user = _db.Users.Include(u => u.Role).Include(u => u.SuppMessages).FirstOrDefault(u => u.Id == box.SuppMessage.User.Id);
 
                 SuppQuestions questions = new SuppQuestions();
-                questions.Questions = box.SuppMessage.ShortDescription;
+                questions.Questions = box.Message;
                 questions.SuppMessageId = box.SuppMessage.Id;
-                questions.Time = DateTime.UtcNow;
+                questions.Time = DateTime.Now;
 
+                SuppMessage suppMessage = _db.SuppMessages.FirstOrDefault(u=>u.Id==box.SuppMessage.Id);
+                suppMessage.IsAnswer = false;
 
+                _db.SuppMessages.Update(suppMessage);
                 _db.SuppQuestions.Add(questions);
                 _db.SaveChanges();
 
@@ -155,17 +173,22 @@ namespace LetiSec.Controllers
                 User user = _db.Users.Include(u => u.Role).Include(u => u.SuppMessages).FirstOrDefault(u => u.Id == box.SuppMessage.User.Id);
 
                 SuppAnswer questions = new SuppAnswer();
-                questions.Answer = box.SuppMessage.ShortDescription;
+                questions.Answer = box.Message;
                 questions.SuppMessageId = box.SuppMessage.Id;
-                questions.Time = DateTime.UtcNow;
+                questions.Time = DateTime.Now;
 
+
+                SuppMessage suppMessage = _db.SuppMessages.FirstOrDefault(u => u.Id == box.SuppMessage.Id);
+                suppMessage.IsAnswer = true;
+
+                _db.SuppMessages.Update(suppMessage);
                 _db.SuppAnswers.Add(questions);
                 _db.SaveChanges();
                 return RedirectToAction("ChatBox", "Support", new { id = box.SuppMessage.Id, role="support" });
             }
             
         }
-
+        [Authorize(Roles = "admin,support")]
         public IActionResult ViewDetails(int id)
         {
             SuppMessage message = _db.SuppMessages.Include(u => u.SuppQuestions)
@@ -173,6 +196,7 @@ namespace LetiSec.Controllers
 
             return View(message);
         }
+
         public IActionResult SendMsg()
         {
             return View();
