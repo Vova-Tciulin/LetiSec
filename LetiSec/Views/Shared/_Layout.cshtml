@@ -44,21 +44,27 @@
 							<ul>
 								<li class="current_page_item"><a asp-action="Home" asp-controller="Home">Главная</a></li>
 								
+								
 								<li>
-									@if (User.IsInRole("admin")||User.IsInRole("support"))
+									@if (User.IsInRole("admin") || User.IsInRole("moderator") || User.IsInRole("support"))
 									{
-										<a asp-action="ViewUsers" asp-controller="Admin">Админ</a>
-										<a asp-action="Index" asp-controller="Support">Вопросы</a>
-									}
-								</li>
-								<li>
-									@if(User.IsInRole("admin")||User.IsInRole("moderator") )
-									{
-										<a href="#">Создание</a>
-										<ul>	
-											<li><a asp-action="ViewCategory" asp-controller="Category">Категории</a></li>
-											<li><a asp-action="Index" asp-controller="Product">Товары</a></li>
-											<li><a asp-action="Index" asp-controller="News">Новости</a></li>
+										<a href="#">Панель Администратора</a>
+										<ul>
+											
+											@if(User.IsInRole("admin")||User.IsInRole("moderator"))
+											{
+												<li><a asp-action="ViewCategory" asp-controller="Category">Категории</a></li>
+												<li><a asp-action="Index" asp-controller="Product">Товары</a></li>
+												<li><a asp-action="Index" asp-controller="News">Новости</a></li>
+											}
+											@if (User.IsInRole("admin"))
+											{
+												<li><a asp-action="ViewUsers" asp-controller="Admin">Пользователи</a></li>
+											}
+											@if (User.IsInRole("admin") || User.IsInRole("support"))
+											{
+												<li><a asp-action="Index" asp-controller="Support">Вопросы</a></li>
+											}
 										</ul>
 									}
 									
