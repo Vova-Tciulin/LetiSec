@@ -1,19 +1,41 @@
 ﻿@model ProductDetailsVM
 
-<div>
-    <p>Название продукта: @Model.Product.Name</p>
-    <img style="width:100px; height:100px" src="/images/products/@Model.Product.Img" alt="ошибка загрузки" />
-    <p>Категория: @Model.Product.Category.Name</p>
-    <h3>Описание продукта</h3>
-    @Html.Raw(Model.Product.Description)
-    <p>Цена: @Model.Product.Price</p>
-    
-    @if(Model.isContains)
-    {
-        <a asp-action="RemoveProduct" asp-controller="Cart" asp-route-path="@ViewBag.ReturnUrl">Убрать из корзины</a>
+<style>
+    .like_button {
+        display: inline-block;
+        background: #000;
+        border-radius: 4px;
+        font-family: "arial-black";
+        font-size: 14px;
+        color: #FFF;
+        padding: 8px 12px;
+        cursor: pointer;
     }
-   
-    <a asp-action="AddProduct" asp-controller="Cart" asp-route-id="@Model.Product.Id">Добавить в корзину</a>
-    
-   
+</style>
+
+<div>
+    <p class="like_button" style="background: #01ff2d; padding: 2px 10px; display: inline;">Название продукта:</p>
+    <p class="like_button" style="background: #0f0fff; padding: 2px 10px; display: inline;">@Model.Product.Name</p>
+    <br><br>
+    <p class="like_button" style="background: #0000ff; display: inline;">Категория:</p>
+    <p class="like_button" style="background: #ff0000; display: inline;">@Model.Product.Category.Name</p>
+    <br><br>
+    <img style="width:100px; height:100px;" src="/images/products/@Model.Product.Img" alt="Picture not found" onerror="this.onerror=null; this.style='width:800px; height:500px'; this.src='/images/av_default.jpg'" />
+    <h4>Описание продукта:</h4>
+
+    <p style="border-width: 3px; border-style: solid; padding: 1em;">
+        @Html.Raw(Model.Product.Description)
+    </p>
+
+    <br>
+    <p class="like_button">Цена: @Model.Product.Price</p>
+
+    <p>
+        @if (Model.isContains)
+        {
+            <a asp-action="RemoveProduct" asp-controller="Cart" asp-route-path="@ViewBag.ReturnUrl"><button>Убрать из корзины</button></a>
+        }
+
+        <a asp-action="AddProduct" asp-controller="Cart" asp-route-id="@Model.Product.Id"><button>Добавить в корзину</button></a>
+    </p>
 </div>

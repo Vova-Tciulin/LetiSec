@@ -1,0 +1,107 @@
+﻿@model News
+
+<<<<<<< HEAD
+<div style="padding-top:50px;margin: auto;">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+=======
+
+
+<form method="post" enctype="multipart/form-data">
+    @if (Model.Id == 0)
+    {
+        <p>Создание </p>
+        <input asp-for="@Model.Id" hidden>
+    }
+    else
+    {
+        <p>Обновление</p>
+        <input asp-for="@Model.Id" hidden>
+    }
+    <div>
+        <label asp-for="ShortDesc">короткое описание</label>
+        <input asp-for="ShortDesc" />
+        <span asp-validation-for="ShortDesc"></span>
+    </div>
+>>>>>>> parent of 4b9791a (Добавлен дизайн страницы продукта)
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                        @if (Model.Id == 0)
+                        {
+                            <h1 style="text-align:center; margin-bottom:30px">Создание</h1>
+                            <input asp-for="@Model.Id" hidden>
+                        }
+                        else
+                        {
+                            <h1 style="text-align:center; margin-bottom:30px">Изменение</h1>
+                            <input asp-for="@Model.Id" hidden>
+
+                        }
+                        <div class="form-group">
+                            <label asp-for="ShortDesc" class="col-md-4 control-label">Название</label>
+                            <div class="col-md-6">
+
+                                <input asp-for="ShortDesc" class="form-control" />
+                                <span asp-validation-for="ShortDesc"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label asp-for="Description" class="col-md-4 control-label">Описание</label>
+                            <div class="col-md-6">
+                                <textarea asp-for="Description" class="summernote" style="height:900px;"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Изображение</label>
+                            <div class="col-md-6">
+                                <input type="file" name="files" id="uploadBox" multiple class="form-control" />
+                                @if (Model.Id != 0)
+                                {
+                                    <img src="/images/news/@Model.Img" style="margin-top:10px">
+                                }
+                            </div>
+                        </div>
+                        <div class="registration-cssave form-group" style="display:flex; justify-content:left">
+                            <div style="margin-left:50px">
+                                @if (Model.Id == 0)
+                                {
+                                    <button class="btn btn-primary btn-lg create-account" type="submit">Создать</button>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-primary btn-lg create-account" type="submit">Изменить</button>
+                                }
+                            </div>
+
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.summernote').summernote({
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']]
+            ],
+            height: 250
+        });
+    });
+
+</script>
