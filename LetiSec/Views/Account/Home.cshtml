@@ -40,7 +40,7 @@
         {
             <li>
                 @suppmsg.ShortDescription
-                <a asp-action="ChatBox" asp-controller="Support" asp-route-id="@suppmsg.Id">Чат</a>
+                <a asp-action="ChatBox" asp-controller="Support" asp-route-id="@suppmsg.Id" asp-route-role="user">Чат</a>
             </li>
         }
     </ul>

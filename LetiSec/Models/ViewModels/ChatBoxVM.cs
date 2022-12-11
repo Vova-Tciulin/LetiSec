@@ -6,6 +6,7 @@ namespace LetiSec.Models.ViewModels
 	{
 		public SuppMessage SuppMessage { get; set; }
 		public List<AllMessage> Msg { get; set; } = new List<AllMessage>();
+		public bool IsUser { get; set; }
 	}
 
 	public class AllMessage
