@@ -1,0 +1,67 @@
+﻿@model IEnumerable<SuppMessage>
+
+<div class="container p-3" style="background-color:white; margin:50px auto; padding:5px 25px">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2>Незакрытые сообщения</h2>
+        </div>
+        <div class="col-6 text-right" style="margin:20px 0px">
+            <a asp-action="ViewAllSupp" class="btn btn-primary">
+               Все заявки
+            </a>
+        </div>
+    </div>
+
+    <br /><br />
+
+    @if (Model.Count() > 0)
+    {
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Описание проблемы
+                    </th>
+                    <th>
+                        Дата
+                    </th>
+                    <th>
+                        Вопрос
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    <tr>
+                        <td width="30%">@obj.ShortDescription</td>
+                        <td width="10%">@obj.Time </td>
+                        @if(obj.IsAnswer==false)
+                        {
+                            <td width="20%">не закрыт</td>
+                        }
+                        else
+                        {
+                            <td width="20%">закрыт</td>
+                        }
+                        
+                        <td width="20%" class="text-center">
+                            <div class="w-75 btn-group" role="group">
+                                <a asp-route-id="@obj.Id" asp-action="ViewDetails" class="btn btn-primary mx-2" style="margin:0px 2px">
+                                    подробнее
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p> Сообщений нет</p>
+    }
+
+</div>

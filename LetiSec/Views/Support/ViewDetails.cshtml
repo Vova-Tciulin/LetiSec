@@ -1,0 +1,12 @@
+﻿@model SuppMessage
+
+<p>@Model.User.Name</p>
+<p>@Model.User.Email</p>
+<p>@Model.ShortDescription</p>
+<p></p>
+<p><img src="~/images/support/@Model.Img" alt="Изображение нет"/></p>
+<p>@Model.Time</p>
+<a asp-action="ChatBox" asp-route-id="@Model.Id" asp-route-role="supp">Ответить</a>
+
+
+

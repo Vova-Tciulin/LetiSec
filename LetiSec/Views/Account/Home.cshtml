@@ -33,5 +33,16 @@
         }
     </ul>
     
+
+    <h1>Чат с поддержкой</h1>
+    <ul>
+        @foreach(var suppmsg in Model.SuppMessages)
+        {
+            <li>
+                @suppmsg.ShortDescription
+                <a asp-action="ChatBox" asp-controller="Support" asp-route-id="@suppmsg.Id" asp-route-role="user">Чат</a>
+            </li>
+        }
+    </ul>
 <a asp-action="LogOut" asp-controller="Account" class="btn btn-primary">Выход </a>
 </div>

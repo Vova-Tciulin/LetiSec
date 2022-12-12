@@ -4,6 +4,7 @@ using LetiSec.Models.DbModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LetiSec.Migrations
 {
     [DbContext(typeof(LetiSecDB))]
-    partial class LetiSecDBModelSnapshot : ModelSnapshot
+    [Migration("20221211100544_updateSuppMsgDb")]
+    partial class updateSuppMsgDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,9 +184,6 @@ namespace LetiSec.Migrations
                     b.Property<int>("SuppMessageId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -202,6 +202,9 @@ namespace LetiSec.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("Date");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -218,9 +221,6 @@ namespace LetiSec.Migrations
                     b.Property<string>("ShortDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -246,9 +246,6 @@ namespace LetiSec.Migrations
 
                     b.Property<int>("SuppMessageId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -292,7 +289,7 @@ namespace LetiSec.Migrations
                             Id = 1,
                             Email = "admin@mail.ru",
                             Name = "Vladimir",
-                            Password = "AQAAAAEAACcQAAAAEJzWP9ymzyMZCv7UFz0aZ6Ukxe93sHnMfnnLVBd4HRQW8qQomJ7BvQ8l5snI+Ow/gA==",
+                            Password = "AQAAAAEAACcQAAAAEGkbD5XtdUDTmcjXpNOgifgbVt5d49oE8RZ/JOAdMjxOILEdEwOw8GaOrIVmimMKVQ==",
                             RoleId = 1
                         });
                 });

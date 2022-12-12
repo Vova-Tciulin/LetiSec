@@ -31,7 +31,7 @@ namespace LetiSec.Controllers
             //поменять order
             string name = User.Identity.Name;
 
-            User user = _db.Users.Include(u => u.Role).FirstOrDefault(u => u.Email == name);
+            User user = _db.Users.Include(u => u.Role).Include(u=>u.SuppMessages).FirstOrDefault(u => u.Email == name);
             IEnumerable<Order> orders = _db.Orders.Include(u => u.Product).Where(u => u.UserId == user.Id);
             user.Orders = orders.ToList();
 

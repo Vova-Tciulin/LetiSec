@@ -1,0 +1,101 @@
+﻿@model ChatBoxVM
+
+
+<div class="outerbg" style="margin-top:10px; margin-bottom:20px; ">
+    <div class="chatboxout" id="your_div" style=" max-height:350px;overflow-y: auto">
+        <div class="chatboxin" style="min-height:350px;">
+        @if(Model.IsUser==true)
+        {
+                @foreach (var msg in Model.Msg)
+                {
+                    if (msg.Name != "support")
+                    {
+                        <div class="chat-container">
+                            <div class="chat-sender msg">
+                                <strong>@Model.SuppMessage.User.Name</strong>
+                                <div class="chatmsg">@msg.Msg</div>
+                            </div>
+                            <div>
+                                @msg.Date.Hour:@msg.Date.Minute
+                            </div>
+                            
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="chat-container">
+                            <div class="chat-respond msg">
+                                <div class="flippd">
+                                    <strong>Тех. Поддержка</strong>
+                                    <div class="chatmsg">
+                                        @msg.Msg
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                @msg.Date.Hour:@msg.Date.Minute
+                            </div>
+                        </div>
+                    }
+                }
+        }
+        else
+        {
+                @foreach (var msg in Model.Msg)
+                {
+                    if (msg.Name == "support")
+                    {
+                        <div class="chat-container">
+                            <div class="chat-sender msg">
+                                <strong>Тех. Поддержка</strong>
+                                <div class="chatmsg">@msg.Msg</div>
+                            </div>
+                            <div>
+                                @msg.Date.Hour:@msg.Date.Minute
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="chat-container">
+                            <div class="chat-respond msg">
+                                <div class="flippd">
+                                    <strong>@Model.SuppMessage.User.Name</strong>
+                                    <div class="chatmsg">
+                                        @msg.Msg
+                                    </div>
+                                    <div>
+                                        @msg.Date.Hour:@msg.Date.Minute
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+        }
+        
+        
+    </div>
+        
+  </div>
+    <div class="chatboxout" style="margin-top:2px ;">
+        <div class="chatboxin">
+            <form asp-action="AddMsg" method="post">
+                <input asp-for="@Model.SuppMessage.User.Id" hidden />
+                <input asp-for="@Model.SuppMessage.Id" hidden />
+                <input asp-for="IsUser" hidden />
+                <textarea asp-for="@Model.Message" style="resize:vertical;">
+
+                </textarea>
+                <div class="form-group" style="margin-top:5px">
+                    <button class="btn btn-primary  create-account" type="submit">Отправить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    var objDiv = document.getElementById("your_div");
+    objDiv.scrollTop = objDiv.scrollHeight;
+</script>
