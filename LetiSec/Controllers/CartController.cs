@@ -165,7 +165,6 @@ namespace LetiSec.Controllers
                 order.ProductId = product.Id;
                 order.Product = product;
                 order.Count = productId.FindAll(u => u == product.Id).Count;
-
                 orders.Add(order);
             }
             var userName = HttpContext.User.Identity.Name;
@@ -175,11 +174,23 @@ namespace LetiSec.Controllers
             {
                 order.UserId = user.Id;
                 order.Date = DateTime.Now;
+                
                 _db.Orders.Add(order);
+
+                Order order2 =(from p in _db.Orders select p ).ToList().Last();
+                for(int i=0;i<order2.Count;i++)
+                {
+                    GuidKey key = new GuidKey();
+                    key.Key = Guid.NewGuid().ToString();
+                    key.OrderId = order2.Id;
+                    _db.Add(key);
+                }
             }
 
             _HttpContextAccessor.HttpContext.Session.Clear();
             _db.SaveChanges();
+
+
             return RedirectToAction("Home","Home");
         }
         

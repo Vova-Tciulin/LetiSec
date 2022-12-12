@@ -4,6 +4,7 @@ using LetiSec.Models.DbModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LetiSec.Migrations
 {
     [DbContext(typeof(LetiSecDB))]
-    partial class LetiSecDBModelSnapshot : ModelSnapshot
+    [Migration("20221212095525_addGuidKey1")]
+    partial class addGuidKey1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,11 +50,11 @@ namespace LetiSec.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Key")
+                    b.Property<string>("Guid")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -319,7 +322,7 @@ namespace LetiSec.Migrations
                             Email = "admin@mail.ru",
                             Name = "Vladimir",
                             Number = "+79991234567",
-                            Password = "AQAAAAEAACcQAAAAECYiXn+Ino6jw8+kfpLztmJEmhh98Pb9lnLAdc+K4NY7TXGVJjypzNcE5vcCaudMtQ==",
+                            Password = "AQAAAAEAACcQAAAAEM8PUHHNWChjQkQgTvepjzcIQXAG9Fp4CQHPiXUuV8cjuIdpkF/9zaIwVZvnCBk94A==",
                             RoleId = 1
                         });
                 });
@@ -328,9 +331,7 @@ namespace LetiSec.Migrations
                 {
                     b.HasOne("LetiSec.Models.DbModel.Order", null)
                         .WithMany("Key")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderId");
                 });
 
             modelBuilder.Entity("LetiSec.Models.DbModel.Order", b =>

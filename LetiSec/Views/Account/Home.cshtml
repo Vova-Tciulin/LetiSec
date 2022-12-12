@@ -13,7 +13,7 @@
 
                 <div class="personalDataRow">
                     <h4 class="personalDataTitle">Телефон</h4>
-                    <span class="personalDataText">+375(29)111-11-11</span>
+                    <span class="personalDataText">@Model.Number</span>
                 </div>
 
                 <div class="personalDataRow">
@@ -39,15 +39,17 @@
             
         </div>
 
-        <div class="card history">
+        <div class="card history" >
             <h3 class="cardTitle">История заказов</h3>
             @foreach(var order in Model.Orders)
             {
-                <div class="historyRow">
-                    <div class="orderNumber">Заказ №@order.Id</div>
-                    <div class="orderNumer">Название продукта</div>
-                    <div class="orderSum">Ключ:123456746846</div>
-                    
+                <div class="historyRow" style=" display:flex;flex-direction:column">
+                    <div class="orderNumer">Название продукта:@order.Product.Name</div>
+                    <div class="orderNumer">Количество:@order.Count</div>
+                    @foreach(var key in order.Key)
+                    {
+                        <div class="orderSum">Ключ:@key.Key</div>
+                    } 
                 </div>
             }
             

@@ -11,6 +11,8 @@ namespace LetiSec.Models.DbModel
         public int Count { get; set; }
         public int ProductId { get; set; }
 
+        
+        public List<GuidKey> Key { get; set; }
         [DataType(DataType.Date)]
         [Column(TypeName ="Date")]
         public DateTime Date { get; set; }

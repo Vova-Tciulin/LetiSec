@@ -1,12 +1,97 @@
 ﻿@model SuppMessage
 
-<p>@Model.User.Name</p>
-<p>@Model.User.Email</p>
-<p>@Model.ShortDescription</p>
-<p></p>
-<p><img src="~/images/support/@Model.Img" alt="Изображение нет"/></p>
-<p>@Model.Time</p>
-<a asp-action="ChatBox" asp-route-id="@Model.Id" asp-route-role="supp">Ответить</a>
+<div style="padding-top:50px;margin: auto;">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a asp-action="ViewUsers" class="btn btn-primary btn-lg create-account">Назад</a>
+                    <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                        <input asp-for="@Model.User.Id" hidden />
+                        <div class="form-group">
+                            <label asp-for="@Model.User.Name" class="col-md-4 control-label">Имя</label>
+                            <div class="col-md-6">
+
+                                <input asp-for="@Model.User.Name" disabled />
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.User.Email" class="col-md-4 control-label">Почта</label>
+                            <div class="col-md-6">
+
+                                <input asp-for="@Model.User.Email" disabled />
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                        <div class="form-group">
+                            <label asp-for="@Model.ShortDescription" class="col-md-4 control-label">Название проблемы</label>
+                            <div class="col-md-6">
+
+                                <input asp-for="@Model.ShortDescription" disabled />
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.ShortDescription" class="col-md-4 control-label">Описание проблемы</label>
+                            <div class="col-md-6">
+
+                                <input asp-for="@Model.SuppQuestions[0].Questions" disabled />
+
+                            </div>
+                        </div>
+
+                            
+                        </div>
+                        <div style="display:flex;justify-content:end">
+
+                            <a asp-action="ChatBox" asp-route-id="@Model.Id" asp-route-role="support" class="btn btn-primary btn-lg create-account" type="submit">Ответить</a>
+                        </div>
+                        @*@if (Model.User.Orders.Count() > 0)
+                        {
+                        <h3 style="text-align:center">Информация о покупках</h3>
+                        <table class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                        <tr>
+                        <th>
+                        Название обращения
+                        </th>
+                        <th>
+                        Дата
+                        </th>
+                        <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var obj in Model.User.SuppMessages)
+                        {
+                        <tr>
+                        <td width="30%">@obj.ShortDescription</td>
+                        <td width="10%">@obj.Time </td>
+                        <td width="20%" class="text-center">
+                        <div class="w-75 btn-group" role="group">
+                        <a asp-route-id="@obj.Id" asp-controller="Support" asp-action="ViewDetails" class="btn btn-primary mx-2" style="margin:0px 2px">
+                        подробнее
+                        </a>
+                        </div>
+                        </td>
+                        </tr>
+                        }
+                        </tbody>
+                        </table>
+                        }*@
+                        
+                            
+                        
 
 
 
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -34,7 +34,7 @@ namespace LetiSec.Controllers
             User user = _db.Users.Include(u => u.Role).Include(u=>u.SuppMessages).FirstOrDefault(u => u.Email == name);
             user.SuppMessages = _db.SuppMessages.Where(u => u.UserId == user.Id).ToList();
 
-            IEnumerable<Order> orders = _db.Orders.Include(u => u.Product).Where(u => u.UserId == user.Id);
+            IEnumerable<Order> orders = _db.Orders.Include(u => u.Product).Include(u=>u.Key).Where(u => u.UserId == user.Id);
             user.Orders = orders.ToList();
 
             return View(user);

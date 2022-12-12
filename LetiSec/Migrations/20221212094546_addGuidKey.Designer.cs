@@ -4,6 +4,7 @@ using LetiSec.Models.DbModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LetiSec.Migrations
 {
     [DbContext(typeof(LetiSecDB))]
-    partial class LetiSecDBModelSnapshot : ModelSnapshot
+    [Migration("20221212094546_addGuidKey")]
+    partial class addGuidKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,7 +50,7 @@ namespace LetiSec.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Key")
+                    b.Property<string>("Guid")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -319,7 +322,7 @@ namespace LetiSec.Migrations
                             Email = "admin@mail.ru",
                             Name = "Vladimir",
                             Number = "+79991234567",
-                            Password = "AQAAAAEAACcQAAAAECYiXn+Ino6jw8+kfpLztmJEmhh98Pb9lnLAdc+K4NY7TXGVJjypzNcE5vcCaudMtQ==",
+                            Password = "AQAAAAEAACcQAAAAEPX+swmop74qtY69cl7EvROumsEwL5AGjG17C6mrlsLt9Y57+fzKAEgIThApAQ9S9A==",
                             RoleId = 1
                         });
                 });
