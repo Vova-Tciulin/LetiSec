@@ -1,0 +1,262 @@
+body {
+    margin: 0;
+}
+
+h2 {
+    font-size: 18px;
+}
+
+@media (min-width: 960px) {
+
+    h2 {
+        font-size: 30px;
+    }
+
+}
+
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.personalArea {
+    display: grid;
+    grid-gap: 30px;
+}
+
+@media (min-width: 320px) {
+
+    .personalArea {
+        grid-template-columns: 1fr;
+        grid-template-areas: "pageTitle" "personal" "points" "invite" "promo" "history";
+    }
+
+}
+
+@media (min-width: 960px) {
+
+    .personalArea {
+        grid-template-columns: 1.2fr 0.8fr;
+        grid-template-areas: "pageTitle points" "personal history" "invite history" "promo history";
+
+    }
+}
+
+.personalArea > .card {
+    background: #FFFFFF;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 30px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.personalArea > .card .cardTitle {
+    margin-top: 0;
+}
+
+.personalArea > .card .cardDesctription {
+    margin-bottom: 20px;
+}
+
+.personalArea > .card .cardFooter {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 590px) {
+
+    .personalArea > .card .cardFooter {
+        flex-direction: row;
+    }
+
+}
+
+.buttonWrapper .btn4 {
+    border-radius: 20px;
+}
+
+.personalArea > .card .cardFooter .buttonWrapper {
+    flex: 1 1 45%;
+}
+
+@media (min-width: 320px) {
+
+    .personalArea > .card .cardFooter .buttonWrapper {
+        margin-bottom: 10px;
+    }
+
+}
+
+.personalArea > .card .cardFooter .textWrapper {
+    flex: 1 1 55%;
+}
+
+.personalArea > .card .cardContent {
+    margin-bottom: 20px;
+}
+
+.personalArea > .card .cardContent label p {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.personalArea > .card .cardContent input {
+    width: 100%;
+}
+
+.personalArea > .card .personalData {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 320px) {
+    .personalArea > .card .personalData {
+        font-size: 14px;
+    }
+}
+
+.personalArea > .card .personalData .personalDataRow {
+    display: flex;
+}
+
+.personalArea > .card .personalData .personalDataRow:not(:last-child) {
+    margin-bottom: 15px;
+}
+
+.personalArea > .card .personalData .personalDataRow .personalDataTitle {
+    display: block;
+    margin: 0;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+}
+
+@media (min-width: 320px) {
+    .personalArea > .card .personalData .personalDataRow .personalDataTitle {
+        font-size: 14px;
+        flex: 1 1 50%;
+    }
+}
+
+@media (min-width: 590px) {
+    .personalArea > .card .personalData .personalDataRow .personalDataTitle {
+        font-size: 18px;
+        flex: 1 1 30%;
+    }
+}
+
+.personalArea > .card .personalData .personalDataRow .personalDataText {
+    display: block;
+    color: rgb(0, 0, 0);
+}
+
+@media (min-width: 320px) {
+    .personalArea > .card .personalData .personalDataRow .personalDataText {
+        font-size: 14px;
+        flex: 1 1 50%;
+    }
+}
+
+@media (min-width: 590px) {
+    .personalArea > .card .personalData .personalDataRow .personalDataText {
+        font-size: 18px;
+        flex: 1 1 70%;
+    }
+}
+
+.personalArea > .card.personal,
+.personalArea > .card.support,
+.personalArea > .card.promo {
+    padding: 20px 15px;
+}
+
+@media (min-width: 590px) {
+    .personalArea > .card.personal,
+    .personalArea > .card.support,
+    .personalArea > .card.promo {
+        padding: 40px;
+    }
+}
+
+.personalArea > .card.history .cardTitle {
+    padding: 20px 15px;
+    padding-bottom: 0;
+}
+
+@media (min-width: 590px) {
+    .personalArea > .card.history .cardTitle {
+        padding: 40px;
+    }
+}
+
+.personalArea > .card.history .historyRow {
+    display: grid;
+    grid-gap: 10px;
+    padding: 20px 15px;
+    grid-template-areas: "orderNumber" "orderSum" "orderInfo";
+}
+
+@media (min-width: 590px) {
+    .personalArea > .card.history .historyRow {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-template-areas: "orderNumber orderInfo" "orderSum orderSum";
+        padding: 25px 40px;
+    }
+}
+
+.personalArea > .card.history .historyRow:nth-child(2) {
+    padding-top: 0 !important;
+}
+
+.personalArea > .card.history .historyRow:not(:last-child) {
+    border-bottom: 1px solid rgba(22, 105, 54, 0.1);
+}
+
+.personalArea .pageTitle,
+.personalArea .points {
+    text-align: center;
+    margin-bottom: 0;
+    text-transform: uppercase;
+}
+
+@media (min-width: 960px) {
+    .personalArea .pageTitle,
+    .personalArea .points {
+        text-align: left;
+    }
+}
+
+.personalArea .pageTitle {
+    grid-area: pageTitle;
+}
+
+.personalArea .history {
+    grid-area: history;
+}
+
+.personalArea .points {
+    grid-area: points;
+}
+
+.personalArea .points .pointsCount {
+    color: #166836;
+}
+
+.personalArea .personal {
+    grid-area: personal;
+}
+
+.personalArea .support {
+    grid-area: invite;
+}
+
+.personalArea .promo {
+    grid-area: promo;
+}
+
+.support-card-wrapper {
+    display: inline-flex;
+    width: 100%;
+    justify-content: space-between;
+}

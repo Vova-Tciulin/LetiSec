@@ -36,8 +36,78 @@
                                 
                             </div>
                         </div>
-
-                        <button class="btn btn-primary btn-lg create-account" type="submit">Изменить</button>
+                        <div style="display:flex;justify-content:end">
+                            
+                            <button class="btn btn-primary btn-lg create-account" type="submit">Изменить</button>
+                        </div>
+                        @*@if (Model.User.Orders.Count() > 0)
+                        {
+                            <h3 style="text-align:center">Информация о покупках</h3>
+                            <table class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Название обращения
+                                        </th>
+                                        <th>
+                                            Дата
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var obj in Model.User.SuppMessages)
+                                    {
+                                        <tr>
+                                            <td width="30%">@obj.ShortDescription</td>
+                                            <td width="10%">@obj.Time </td>
+                                            <td width="20%" class="text-center">
+                                                <div class="w-75 btn-group" role="group">
+                                                    <a asp-route-id="@obj.Id" asp-controller="Support" asp-action="ViewDetails" class="btn btn-primary mx-2" style="margin:0px 2px">
+                                                        подробнее
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }*@
+                        @if (Model.User.SuppMessages.Count() > 0)
+                        {
+                            <h3 style="text-align:center">Обращения пользователя в тех. поддержку</h3>
+                            <table class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Название обращения
+                                        </th>
+                                        <th>
+                                            Дата
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var obj in Model.User.SuppMessages)
+                                    {
+                                        <tr>
+                                            <td width="30%">@obj.ShortDescription</td>
+                                            <td width="10%">@obj.Time </td>
+                                                <td width="20%" class="text-center">
+                                                    <div class="w-75 btn-group" role="group">
+                                                        <a asp-route-id="@obj.Id" asp-controller="Support" asp-action="ViewDetails" class="btn btn-primary mx-2" style="margin:0px 2px">
+                                                            подробнее
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                       
+                        
                         
 
                     </form>

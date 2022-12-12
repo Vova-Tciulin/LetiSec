@@ -2,47 +2,56 @@
 
 
 
-<div class="mb-3" >
-    <table class="table table-sm table-striped table-bordered">
-        <thead>
-        <tr>
-            <th>Имя</th>
-            <th>Почта</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>@Model.Name</td>
-                <td>@Model.Email</td>
-            </tr>
-        </tbody>
-    </table>
-    <h2>Заказы</h2>
-    @if(Model.Orders.Count==0)
-    {
-        <h3>Покупок нет</h3>
-    }
-    <ul>
-        @foreach(var order in Model.Orders)
-        {
-            <li>
-                Товар: @order.Product.Name<br>
-                Количество: @order.Count<br>
-            </li>
-           
-        }
-    </ul>
-    
+<div class="content">
+    <div class="personalArea">
+        <h2 class="pageTitle">Личный кабинет</h2>
+        <div class="card personal">
 
-    <h1>Чат с поддержкой</h1>
-    <ul>
-        @foreach(var suppmsg in Model.SuppMessages)
-        {
-            <li>
-                @suppmsg.ShortDescription
-                <a asp-action="ChatBox" asp-controller="Support" asp-route-id="@suppmsg.Id" asp-route-role="user">Чат</a>
-            </li>
-        }
-    </ul>
-<a asp-action="LogOut" asp-controller="Account" class="btn btn-primary">Выход </a>
+            <h3 class="cardTitle">@Model.Name</h3>
+
+            <div class="personalData">
+
+                <div class="personalDataRow">
+                    <h4 class="personalDataTitle">Телефон</h4>
+                    <span class="personalDataText">+375(29)111-11-11</span>
+                </div>
+
+                <div class="personalDataRow">
+                    <h4 class="personalDataTitle">Email</h4>
+                    <span class="personalDataText">@Model.Email</span>
+                </div>
+
+            </div>
+        </div>
+        <div class="card support">
+            <h3 class="cardTitle">Ваши обращения в поддержку</h3>
+            @foreach(var msg in Model.SuppMessages)
+            {
+                <div class="support-card-wrapper">
+                <div class="cardDesctription">@msg.ShortDescription</div>
+                <div class="cardFooter">
+                    <div class="buttonWrapper">
+                            <a class="btn btn-primary btn-block create-account">Открыть Чат</a>
+                    </div>
+                </div>
+                </div>
+            }
+            
+        </div>
+
+        <div class="card history">
+            <h3 class="cardTitle">История заказов</h3>
+            @foreach(var order in Model.Orders)
+            {
+                <div class="historyRow">
+                    <div class="orderNumber">Заказ №@order.Id</div>
+                    <div class="orderNumer">Название продукта</div>
+                    <div class="orderSum">Ключ:123456746846</div>
+                    
+                </div>
+            }
+            
+            
+        </div>
+    </div>
 </div>

@@ -44,6 +44,7 @@ namespace LetiSec.Controllers
             };
             IEnumerable<Order> orders = _db.Orders.Include(u => u.Product).Where(u => u.UserId == userDetailsVM.User.Id);
             userDetailsVM.User.Orders = orders.ToList();
+            userDetailsVM.User.SuppMessages = _db.SuppMessages.Where(u => u.UserId == userDetailsVM.User.Id).ToList();
 
             return View(userDetailsVM);
         }

@@ -15,6 +15,11 @@ namespace LetiSec.Models
         [UIHint("Email")]
         public string Email { get; set; }
 
+        [Required(ErrorMessage = "Введите номер телефона")]
+        [Display(Name = "Номер телефона")]
+        [UIHint("Number")]
+        public string Number { get; set; }
+
         [Required(ErrorMessage = "Введите пароль")]
         [StringLength(20, MinimumLength =6)]
         [Compare("ConfirmPassword")]
