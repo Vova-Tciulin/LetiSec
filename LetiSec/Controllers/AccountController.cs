@@ -58,7 +58,7 @@ namespace LetiSec.Controllers
                 {
 
                     string hash = _hashPass.HashPas(user, userModel.Password);
-                    user = new User { Email = userModel.Email, Name = userModel.Name, Password =hash, RoleId = 2 };
+                    user = new User { Email = userModel.Email, Name = userModel.Name, Password =hash, Number=userModel.Number, RoleId = 2 };
                     _db.Users.Add(user);
                     await _db.SaveChangesAsync();
 
