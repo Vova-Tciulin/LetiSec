@@ -13,9 +13,10 @@
 							
 							<article class="box excerpt">
 								<a href="#" class="image left"><img src="/images/news/@news.Img" alt="" /></a>
-								<div>
-									<p>@news.ShortDesc</p>
-								</div>
+								
+									<header><b>@news.ShortDesc</b></header>
+									<p>@Html.Raw(@news.Description)</p>
+
 							</article>
 						}
 
@@ -24,6 +25,5 @@
 			</div>
 		</div>
 	</div>
-        }
 </div>
 

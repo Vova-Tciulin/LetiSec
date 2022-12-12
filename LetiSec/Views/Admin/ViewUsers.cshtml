@@ -1,15 +1,58 @@
 ﻿@model IEnumerable<User>
 
+<style>
+.bullet {
+    margin-left: 0;
+    list-style: none;
+}
 
-    <div>
-        <ul>
-           @foreach(var user in Model)
-           {
-               <li>
-                   Имя: @user.Name Почта: @user.Email Роль: @user.Role.Name 
-                   <a asp-action="UserDetails" asp-controller="Admin" asp-route-id="@user.Id">Подробнее</a>
-               </li>
-           }
-        </ul>
+.bullet p {
+    position: relative;
+    margin-bottom: 1.5em;
+    border: 3px solid #CADFCF;
+    padding: 0.6em;
+    border-radius: 4px;
+    background: #FEFEFE;
+    color: #231F20;
+    font-family: "Trebuchet MS", "Lucida Sans";
+}
+
+.bullet p:before {
+    position: absolute;
+    top: -0.7em;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+    font-size: 16px;
+    font-weight: bold;
+    color: #DCC24B;
+    background: #FEFEFE;
+    border-radius: 50%;
+    content: var(--role-var);
+}
+
+.like_button {
+    display: inline-block;
+    background: #000;
+    border-radius: 4px;
+    font-family: "arial-black";
+    font-size: 14px;
+    color: #FFF;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+</style>
+
+<div>
+    <div class="bullet">
+        @foreach(var user in Model)
+        {
+            
+            <p style='--role-var: "@user.Role.Name";'>
+                <span class="like_button" style="background: #0f0fff;">@user.Name</span>
+                <span class="like_button" style="background: #01ff2d;">@user.Email</span>
+                <a asp-action="UserDetails" asp-controller="Admin" asp-route-id="@user.Id"><button>Подробнее</button></a>
+            </p>
+        }
     </div>
+</div>
 
