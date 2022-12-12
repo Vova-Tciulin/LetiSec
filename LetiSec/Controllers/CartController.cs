@@ -176,7 +176,7 @@ namespace LetiSec.Controllers
                 order.Date = DateTime.Now;
                 
                 _db.Orders.Add(order);
-
+                _db.SaveChanges();
                 Order order2 =(from p in _db.Orders select p ).ToList().Last();
                 for(int i=0;i<order2.Count;i++)
                 {

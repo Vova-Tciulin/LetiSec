@@ -31,7 +31,7 @@
                 <div class="cardDesctription">@msg.ShortDescription</div>
                 <div class="cardFooter">
                     <div class="buttonWrapper">
-                            <a class="btn btn-primary btn-block create-account">Открыть Чат</a>
+                            <a asp-action="ChatBox" asp-controller="Support" asp-route-id="@msg.Id" asp-route--role="user" class="btn btn-primary btn-block create-account">Открыть Чат</a>
                     </div>
                 </div>
                 </div>
@@ -55,5 +55,10 @@
             
             
         </div>
+        
     </div>
+    <div style="width:100px;height:50px; margin:10px">
+        <a asp-controller="Account" asp-action="LogOut" class="btn btn-primary btn-block create-account">Выход</a>
+    </div>
+    
 </div>

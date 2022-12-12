@@ -35,8 +35,8 @@
                         <div class="product-price">@product.Price руб</div>
                        
                         <div class="product-links">
-
-                            <a href=""><i class="fa fa-shopping-cart"></i></a>
+                            <a asp-action="AddProduct" asp-controller="Cart" asp-route-path=" /Product/ViewProduct/@product.Id"><i class="fa fa-shopping-cart"></i></a>
+                            
                         </div>
                     </div>
                 </div>
