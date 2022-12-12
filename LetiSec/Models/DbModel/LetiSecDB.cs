@@ -38,7 +38,7 @@ namespace LetiSec.Models.DbModel
             });
 
 
-            User admin = new User { Id = 1, Email = "admin@mail.ru", Name = "Vladimir", Password = "Admin123", RoleId = 1 };
+            User admin = new User { Id = 1, Email = "admin@mail.ru", Name = "Vladimir", Number="+79991234567", Password = "Admin123", RoleId = 1 };
             PasswordHash<User> passwordHash = new PasswordHash<User>();
             admin.Password = passwordHash.HashPas(admin, admin.Password);
 
