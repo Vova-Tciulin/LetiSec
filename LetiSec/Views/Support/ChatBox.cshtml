@@ -81,6 +81,7 @@
     <div class="chatboxout" style="margin-top:2px ;">
         <div class="chatboxin">
             <form asp-action="AddMsg" method="post">
+                <input asp-for="@Model.IsUser" hidden />
                 <input asp-for="@Model.SuppMessage.User.Id" hidden />
                 <input asp-for="@Model.SuppMessage.Id" hidden />
                 <input asp-for="IsUser" hidden />

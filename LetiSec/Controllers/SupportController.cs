@@ -127,8 +127,8 @@ namespace LetiSec.Controllers
             chat.Msg = (from p in chat.Msg
                        orderby p.Date
                        select p).ToList();
-
-            if(role=="user")
+            message.User.Role = _db.Roles.FirstOrDefault(u => u.Id == message.User.RoleId);
+            if(message.User.Role.Name=="user")
             {
                 chat.IsUser = true;
             }
