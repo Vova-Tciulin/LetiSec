@@ -7,6 +7,8 @@ namespace LetiSec.Models.DbModel
     public class SuppMessage
     {
         public int Id{ get; set; }
+
+        [Required(ErrorMessage = "Введите название проблемы")]
         public string ShortDescription { get; set; }
         public string Email { get; set; }
         public int UserId { get; set; }

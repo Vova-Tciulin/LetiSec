@@ -16,7 +16,7 @@
                             <div class="col-md-6">
 
                                 <input asp-for="@Model.SuppMessage.ShortDescription" class="form-control" />
-                                <span asp-validation-for="@Model.SuppMessage.ShortDescription"></span>
+                                <span asp-validation-for="@Model.SuppMessage.ShortDescription" class="text-danger"></span>
                             </div>
                         </div>
                         
@@ -24,7 +24,7 @@
                             <label asp-for="@Model.Questions" class="col-md-4 control-label">Описание вашей проблемы</label>
                             <div class="col-md-6">
                                 <textarea asp-for="@Model.Questions"  style="height:250px;"></textarea>
-                                @*<span asp-validation-for="Descriptions" class="text-danger"></span>*@
+                                <span asp-validation-for="@Model.Questions" class="text-danger"></span>
 
                             </div>
                         </div>
@@ -32,17 +32,11 @@
                             <label asp-for="@Model.SuppMessage.Email" class="col-md-4 control-label">Ваша почта</label>
                             <div class="col-md-6">
                                 <input asp-for="@Model.SuppMessage.Email" class="form-control" />
-                                <span asp-validation-for="@Model.SuppMessage.Email"></span>
+                                <span asp-validation-for="@Model.SuppMessage.Email" class="text-danger"></span>
 
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Прикрепить изображение</label>
-                            <div class="col-md-6">
-                                <input type="file" name="files" id="uploadBox" multiple class="form-control" />
-                                
-                            </div>
-                        </div>
+                        
                         <div class="registration-cssave form-group" style="display:flex; justify-content:left">
                             <div style="margin-left:50px">
                                 <button class="btn btn-primary btn-lg create-account" type="submit">Отправить заявку</button>

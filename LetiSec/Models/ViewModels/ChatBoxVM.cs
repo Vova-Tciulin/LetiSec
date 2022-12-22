@@ -4,6 +4,7 @@ namespace LetiSec.Models.ViewModels
 {
 	public class ChatBoxVM
 	{
+		
 		public SuppMessage SuppMessage { get; set; }
 		public List<AllMessage> Msg { get; set; } = new List<AllMessage>();
 		public bool IsUser { get; set; }
